@@ -46,5 +46,14 @@ export default defineConfig({
   output: "server",
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      external: [
+        "node:fs",
+        "node:fs/promises",
+        "node:path",
+        "node:url",
+        "node:crypto",
+      ],
+    },
   },
 });
