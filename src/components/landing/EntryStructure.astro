@@ -54,7 +54,7 @@ const updatedSubsections = Object.keys(updates).reduce((acc, path) => {
 const SEVEN_DAYS_AGO = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 ---
 
-<ul class="flex flex-col divide-y divide-base-200 dark:divide-base-800 group">
+<ul class="grid grid-cols-1 lg:grid-cols-4 gap-y-12 gap-x-2 group">
   {
     entriesWithQuantity.map((template) => {
       const subsection = template.link.split("/").pop();
@@ -62,19 +62,19 @@ const SEVEN_DAYS_AGO = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
       const updatedAt = new Date(updated * 1000);
       const isUpdatedLastWeek = updatedAt > SEVEN_DAYS_AGO;
       return (
-        <li class="relative py-2 px-8 group-hover:opacity-30 hover:opacity-100 peer hover:peer-hover:opacity-30 duration-300">
+        <li class="relative py-2  group-hover:opacity-30 hover:opacity-100 peer hover:peer-hover:opacity-30 duration-300">
           <a
             title={template.name}
             href={template.link}
             class="absolute inset-0 z-1"
           />
           <div>
-            {/*  <Image
-              class="object-cover object-top rounded-lg  shadow-oxbow  aspect-16/10"
+            <Image
+              class="object-cover object-top    aspect-16/10 w-full outline outline-base-200 dark:outline-base-800"
               alt={template.name}
               src={template.image()}
-            /> */}
-            <div class="flex flex-col md:flex-row justify-between lg:items-center mt-2">
+            />
+            <div class="flex flex-col  mt-2">
               <Text
                 tag="p"
                 variant="textXS"

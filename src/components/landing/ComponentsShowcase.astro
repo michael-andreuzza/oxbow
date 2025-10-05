@@ -2,7 +2,6 @@
 import Text from "@/components/fundations/typography/Text.astro";
 import EntryStructure from "@/components/landing/EntryStructure.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
-
 import StripesBG from "@/components/assets/StripesBG.astro";
 //
 //
@@ -62,9 +61,7 @@ const groupedEntries = [
   })()"
 >
 <Wrapper variant="standard" class="lg:sticky lg:top-16 z-50 border-t bg-beige dark:bg-base-950 border-b border-base-200 dark:border-base-800">
-  
   <nav class="relative flex gap-6" role="tablist" aria-label="Components sections">
-    
     {groupedEntries.map(({ id, title }) => (
       <a
         role="tab"
@@ -84,13 +81,12 @@ const groupedEntries = [
     ))}
   </nav>
 </Wrapper>
-    <Wrapper variant="paddingless" class="border-x border-b border-base-200 dark:border-base-800">
-      
+    <Wrapper variant="standard" class="border-b border-base-200 dark:border-base-800">
       {groupedEntries.map(({ id, title, description, groups }) => {
         const firstGroup = groups[0]?.id || '';
         return (
           <div
-          class="relative grid grid-cols-1 lg:grid-cols-3"
+          class="relative pt-12"
             id={id}
             x-show={`tab === '${id}'`}
             x-cloak
@@ -111,23 +107,9 @@ const groupedEntries = [
               }
             })()`}
           >
-            
-                  <div class=" px-8 py-8 relative ">
-                  <div class="lg:sticky lg:top-32">
-                    <Text tag="p" variant="textSM" class="text-base-500 dark:text-base-400 font-medium max-w-sm text-balance mb-8">{description}</Text>
-                     <StripesBG
-       aria-hidden="true"
-      variant="light"
-      direction="horizontal"
-      class=" p-20 mt-auto h-1/3 -mb-1"
-    />
-       
-                      {/*   <Cross class="-top-[0.6rem] -right-[0.65rem] z-51" />
-                       <Cross class="-top-[0.6rem] -left-[0.65rem] z-51" /> */}
-                  </div>
-                  </div>
-                 <div class="relative w-full divide-y divide-base-800 lg:col-span-2 lg:border-l lg:border-base-200 lg:dark:border-base-800 ">
-                    <div class="lg:sticky lg:top-[6.5rem] z-40 pt-4 px-8  border-b border-base-200 dark:border-base-800 bg-beige dark:bg-base-950">
+                    <Text tag="p" variant="textSM" class="text-base-500 dark:text-base-400 font-medium max-w-sm text-balance ">{description}</Text>
+                 <div class="relative w-full divide-y divide-base-800 lg:col-span-2 mt-8">
+                    <div class="  border-b border-base-200 dark:border-base-800 bg-beige dark:bg-base-950">
                         {/* Nested tabs for groups */}
                         <nav class="flex items-center gap-4  " role="tablist" aria-label={`${title} groups`}>
                           {groups.map(({ id: groupId, label }) => (
