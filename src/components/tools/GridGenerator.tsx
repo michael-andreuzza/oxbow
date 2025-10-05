@@ -20,6 +20,7 @@ export default function GridGenerator() {
   const [isResizing, setIsResizing] = useState(false);
   const [highlightedCode, setHighlightedCode] = useState<string>("");
   const [highlightFailed, setHighlightFailed] = useState(false);
+  const [cellSize, setCellSize] = useState({ width: 0, height: 0 });
   const gridRef = useRef<HTMLDivElement>(null);
   const highlighterCache = useRef<{
     highlighter: Highlighter | null;
@@ -28,21 +29,33 @@ export default function GridGenerator() {
   }>({ highlighter: null, themeName: "css-variables", loading: null });
   const gapSize = gap * 2; // Convert gap to pixels
   const getCellHeight = useCallback(
-    () => 96,
-    [],
+    () => cellSize.height || 96,
+    [cellSize.height],
   );
-  const getCellWidth = useCallback(
-    () => (gridRef.current?.clientWidth - gapSize * (columns - 1)) / columns,
-    [gridRef, gapSize, columns],
-  );
+  const getCellWidth = useCallback(() => {
+    if (cellSize.width) return cellSize.width;
+    const width = gridRef.current?.clientWidth;
+    if (!width) return 0;
+    return (width - gapSize * (columns - 1)) / columns;
+  }, [cellSize.width, gapSize, columns]);
   const getGridHeight = useCallback(
     () => (rows * getCellHeight()) + (gapSize * (rows - 1)),
     [rows, getCellHeight, gapSize],
   );
   const getCellX = (x: number) => (x - 1) * getCellWidth() + gapSize * (x - 1);
   const getCellY = (y: number) => (y - 1) * getCellHeight() + gapSize * (y - 1);
-  const xToCol = (x: number) => Math.round(x / (getCellWidth() + gapSize)) + 1;
-  const yToRow = (y: number) => Math.round(y / (getCellHeight() + gapSize)) + 1;
+  const xToCol = (x: number) => {
+    const width = getCellWidth();
+    if (!width) return 1;
+    const col = Math.round(x / (width + gapSize)) + 1;
+    return Math.min(columns, Math.max(1, col));
+  };
+  const yToRow = (y: number) => {
+    const height = getCellHeight();
+    if (!height) return 1;
+    const row = Math.round(y / (height + gapSize)) + 1;
+    return Math.min(rows, Math.max(1, row));
+  };
   const getCellWidthPx = (w: number) => w * getCellWidth() + (w - 1) * gapSize;
   const getCellHeightPx = (h: number) =>
     h * getCellHeight() + (h - 1) * gapSize;
@@ -67,8 +80,14 @@ export default function GridGenerator() {
     delta: { width: number; height: number },
   ) => {
     const item = items.find((item) => item.id === id);
-    const width = item.w + Math.round(delta.width / (getCellWidth() + gapSize));
-    const height = item.h + Math.round(delta.height / (getCellHeight() + gapSize));
+    const cellWidth = getCellWidth();
+    const cellHeight = getCellHeight();
+    const width = cellWidth
+      ? item.w + Math.round(delta.width / (cellWidth + gapSize))
+      : item.w;
+    const height = cellHeight
+      ? item.h + Math.round(delta.height / (cellHeight + gapSize))
+      : item.h;
     setItems(
       items.map((item) =>
         item.id === id
@@ -107,10 +126,36 @@ export default function GridGenerator() {
     );
   };
   const generateCode = useMemo(() => {
-    const gridClass = `grid grid-cols-${columns} grid-rows-${rows} gap-${gap}`;
+    const gridClasses = [
+      "grid",
+      "grid-cols-1",
+      `md:grid-cols-${columns}`,
+      `gap-${gap}`,
+    ];
+    if (rows > 1) {
+      gridClasses.push(`md:grid-rows-${rows}`);
+    }
+    const gridClass = gridClasses.join(" ");
+
     const itemsCode = items
       .map((item) => {
-        const className = `col-start-${item.x} row-start-${item.y} col-span-${item.w} row-span-${item.h}`;
+        const itemClasses = [
+          `md:col-start-${item.x}`,
+          `md:row-start-${item.y}`,
+          `md:col-span-${item.w}`,
+          `md:row-span-${item.h}`,
+          "flex",
+          "items-center",
+          "justify-center",
+          "bg-zinc-100",
+          "dark:bg-zinc-800",
+          "p-6",
+          "text-sm",
+          "font-semibold",
+          "text-zinc-900",
+          "dark:text-zinc-100",
+        ];
+        const className = itemClasses.join(" ");
         if (format === "jsx") {
           return [
             `  <div key="${item.id}" className="${className}">`,
@@ -125,10 +170,38 @@ export default function GridGenerator() {
         ].join("\n");
       })
       .join("\n");
+
     return format === "html"
       ? [`<div class="${gridClass}">`, itemsCode, "</div>"].join("\n")
       : [`<div className="${gridClass}">`, itemsCode, "</div>"].join("\n");
   }, [format, columns, rows, gap, items]);
+  useEffect(() => {
+    const updateCellSize = () => {
+      const gridEl = gridRef.current;
+      if (!gridEl) return;
+      const firstCell = gridEl.querySelector<HTMLDivElement>("[data-grid-cell]");
+      if (!firstCell) return;
+      const rect = firstCell.getBoundingClientRect();
+      setCellSize({ width: rect.width, height: rect.height });
+    };
+
+    updateCellSize();
+
+    const gridEl = gridRef.current;
+    if (!gridEl) return;
+
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(() => updateCellSize());
+      resizeObserver.observe(gridEl);
+    }
+    window.addEventListener("resize", updateCellSize);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", updateCellSize);
+    };
+  }, [columns, rows, gap]);
   const handleCopy = () => {
     navigator.clipboard.writeText(generateCode);
     setIsCopied(true);
@@ -192,7 +265,7 @@ export default function GridGenerator() {
     <div>
       <div className="w-full grid grid-cols-3 md:grid-cols-4 gap-2">
         <div className="flex flex-col gap-1">
-          <label htmlFor="columns" className="text-sm text-zinc-500 dark:text-zinc-400">
+          <label htmlFor="columns" className="text-sm text-base-500 dark:text-base-400">
             Columns
           </label>
           <input
@@ -202,11 +275,11 @@ export default function GridGenerator() {
             max={12}
             value={columns}
             onChange={(e) => setColumns(Number(e.target.value))}
-            className="w-full h-10 px-3 py-2 text-sm bg-white dark:bg-base-800 border rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-zinc-200 dark:focus:border-white/20 text-zinc-600 dark:text-zinc-100 border-zinc-100 dark:border-white/10 leading-6 transition-colors duration-200 ease-in-out"
+            className="w-full h-10 px-3 py-2 text-sm bg-white dark:bg-base-800 border rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-base-200 dark:focus:border-white/20 text-base-600 dark:text-base-100 border-base-100 dark:border-white/10 leading-6 transition-colors duration-200 ease-in-out"
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="rows" className="text-sm text-zinc-500 dark:text-zinc-400">
+          <label htmlFor="rows" className="text-sm text-base-500 dark:text-base-400">
             Rows
           </label>
           <input
@@ -216,11 +289,11 @@ export default function GridGenerator() {
             max={12}
             value={rows}
             onChange={(e) => setRows(Number(e.target.value))}
-            className="w-full h-10 px-3 py-2 text-sm bg-white dark:bg-base-800 border rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-zinc-200 dark:focus:border-white/20 text-zinc-600 dark:text-zinc-100 border-zinc-100 dark:border-white/10 leading-6 transition-colors duration-200 ease-in-out"
+            className="w-full h-10 px-3 py-2 text-sm bg-white dark:bg-base-800 border rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-base-200 dark:focus:border-white/20 text-base-600 dark:text-base-100 border-base-100 dark:border-white/10 leading-6 transition-colors duration-200 ease-in-out"
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="gap" className="text-sm text-zinc-500 dark:text-zinc-400">
+          <label htmlFor="gap" className="text-sm text-base-500 dark:text-base-400">
             Gap
           </label>
           <input
@@ -230,7 +303,7 @@ export default function GridGenerator() {
             max={16}
             value={gap}
             onChange={(e) => setGap(Number(e.target.value))}
-            className="w-full h-10 px-3 py-2 text-sm bg-white dark:bg-base-800 border rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-zinc-200 dark:focus:border-white/20 text-zinc-600 dark:text-zinc-100 border-zinc-100 dark:border-white/10 leading-6 transition-colors duration-200 ease-in-out"
+            className="w-full h-10 px-3 py-2 text-sm bg-white dark:bg-base-800 border rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-base-200 dark:focus:border-white/20 text-base-600 dark:text-base-100 border-base-100 dark:border-white/10 leading-6 transition-colors duration-200 ease-in-out"
           />
         </div>
       </div>
@@ -240,7 +313,7 @@ export default function GridGenerator() {
         <div
           ref={gridRef}
           className={`
-              grid font-mono text-zinc-900 dark:text-zinc-100 text-sm text-center font-bold w-full h-full
+              grid font-mono text-base-900 dark:text-base-100 text-sm text-center font-bold w-full h-full
               grid-cols-${columns} grid-rows-${rows}
             `}
           style={{
@@ -254,60 +327,71 @@ export default function GridGenerator() {
             return (
               <div
                 key={index}
-                className="relative flex items-center justify-center p-8 text-2xl bg-white dark:bg-base-800 cursor-pointer rounded-xl shadow-oxbow border border-zinc-100 dark:border-white/10"
+                data-grid-cell
+                className="relative flex items-center justify-center p-8 text-2xl bg-base-50 dark:bg-base-900 cursor-pointer rounded-lg shadow-oxbow border border-base-200 dark:border-base-700"
                 onClick={() => handleAddItem(x, y)}
               >
-                <span className="text-zinc-400 dark:text-zinc-500">+</span>
+                <span className="text-base-400 dark:text-base-500">+</span>
               </div>
             );
           })}
         </div>
-        {items.map((item) => (
-          <Rnd
-            key={item.id}
-            size={{
-              width: getCellWidthPx(item.w),
-              height: getCellHeightPx(item.h),
-            }}
-            position={{ x: getCellX(item.x), y: getCellY(item.y) }}
-            bounds="parent"
-            enableResizing={{
-              bottom: true,
-              right: true,
-              left: false,
-              top: false,
-            }}
-            onResizeStart={() =>
-              onResizeStart(item.id)
-            }
-            onResizeStop={(e, d, ref, delta) =>
-              onResizeStop(item.id, delta)
-            }
-            onDragStop={(e, data) => onDragStop(item.id, data)}
-            className="relative flex items-center justify-center p-4 bg-white dark:bg-base-800 cursor-pointer outline-2 rounded-xl outline-blue-600 dark:outline-accent-400/70 border border-blue-100 dark:border-white/10"
-          >
-            <button
-              onClick={() => handleRemoveItem(item.id)}
-              onTouchEnd={() => handleRemoveItem(item.id)}
-              className="absolute z-10 top-4 right-4 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
-              aria-label={`Remove item ${item.id}`}
+        {items.map((item) => {
+          const snap = (() => {
+            const width = getCellWidth();
+            const height = getCellHeight();
+            if (!width || !height) return null;
+            return [width + gapSize, height + gapSize] as [number, number];
+          })();
+
+          return (
+            <Rnd
+              key={item.id}
+              size={{
+                width: getCellWidthPx(item.w),
+                height: getCellHeightPx(item.h),
+              }}
+              position={{ x: getCellX(item.x), y: getCellY(item.y) }}
+              bounds="parent"
+              enableResizing={{
+                bottom: true,
+                right: true,
+                left: false,
+                top: false,
+              }}
+              onResizeStart={() =>
+                onResizeStart(item.id)
+              }
+              onResizeStop={(e, d, ref, delta) =>
+                onResizeStop(item.id, delta)
+              }
+              onDragStop={(e, data) => onDragStop(item.id, data)}
+              {...(snap ? { dragGrid: snap } : {})}
+              className="relative flex items-center justify-center p-6 bg-white outline outline-base-200 dark:outline-base-800 dark:bg-base-800 cursor-pointer  text-sm font-semibold text-base-900 dark:text-base-100"
             >
-              <X className="size-4" />
-            </button>
-            <span className="text-zinc-900 dark:text-zinc-100">{item.id.replace("item-", "")}</span>
-            <div className="absolute flex items-center justify-center rounded-bl bottom-4 right-4">
-              <ArrowDownRight className="text-zinc-900 dark:text-zinc-100 size-4" />
-            </div>
-          </Rnd>
-        ))}
+              <button
+                onClick={() => handleRemoveItem(item.id)}
+                onTouchEnd={() => handleRemoveItem(item.id)}
+                className="absolute z-10 top-4 right-4 text-base-500 hover:text-base-900 dark:text-base-400 dark:hover:text-base-200"
+                aria-label={`Remove item ${item.id}`}
+              >
+                <X className="size-4" />
+              </button>
+              <span className="text-base-900 dark:text-base-100">{item.id.replace("item-", "")}</span>
+              <div className="absolute flex items-center justify-center rounded-bl bottom-4 right-4">
+                <ArrowDownRight className="text-base-900 dark:text-base-100 size-4" />
+              </div>
+            </Rnd>
+          );
+        })}
       </div>
       <div className="flex flex-col justify-between w-full pt-4 md:flex-row md:items-center">
-        <h3 className="text-zinc-900 dark:text-zinc-100">Get your code</h3>
+        <h3 className="text-base-900 dark:text-base-100">Get your code</h3>
         <div className="flex items-center gap-2">
           <button
             className={`
-                    flex items-center justify-center text-center shadow-subtle font-medium duration-500 ease-in-out transition-colors focus:outline-2 focus:outline-offset-2 text-zinc-900 dark:text-zinc-100 bg-white dark:bg-base-800 hover:bg-zinc-100 dark:hover:bg-base-800 focus:outline-zinc-900 dark:focus:outline-base-100 h-7 px-4 py-2 text-xs rounded-md w-full
-                    ${format === "html" ? "!outline-zinc-700 dark:!outline-base-200" : "text-zinc-500 dark:text-zinc-400"}
+                    flex items-center justify-center text-center shadow-subtle font-medium duration-500 ease-in-out transition-colors focus:outline-2 focus:outline-offset-2 text-base-900 dark:text-base-100 bg-white dark:bg-base-800 hover:bg-base-100 dark:hover:bg-base-800 focus:outline-base-900 dark:focus:outline-base-100 h-7 px-4 py-2 text-xs rounded-md w-full
+                    ${format === "html" ? "!outline-base-700 dark:!outline-base-200" : "text-base-500 dark:text-base-400"}
                   `}
             onClick={() => setFormat("html")}
           >
@@ -315,21 +399,21 @@ export default function GridGenerator() {
           </button>
           <button
             className={`
-                  flex items-center justify-center text-center shadow-subtle font-medium duration-500 ease-in-out transition-colors focus:outline-2 focus:outline-offset-2 text-zinc-900 dark:text-zinc-100 bg-white dark:bg-base-800 hover:bg-zinc-100 dark:hover:bg-base-800 focus:outline-zinc-900 dark:focus:outline-base-100 h-7 px-4 py-2 text-xs rounded-md w-full
-                    ${format === "jsx" ? "!outline-zinc-700 dark:!outline-base-200" : "text-zinc-500 dark:text-zinc-400"}
+                  flex items-center justify-center text-center shadow-subtle font-medium duration-500 ease-in-out transition-colors focus:outline-2 focus:outline-offset-2 text-base-900 dark:text-base-100 bg-white dark:bg-base-800 hover:bg-base-100 dark:hover:bg-base-800 focus:outline-base-900 dark:focus:outline-base-100 h-7 px-4 py-2 text-xs rounded-md w-full
+                    ${format === "jsx" ? "!outline-base-700 dark:!outline-base-200" : "text-base-500 dark:text-base-400"}
                   `}
             onClick={() => setFormat("jsx")}
           >
             JSX
           </button>
           <button
-            className="flex items-center justify-center w-full px-4 py-2 text-xs font-medium text-center text-zinc-900 dark:text-zinc-100 bg-white dark:bg-base-800 shadow-subtle duration-500 ease-in-out transition-colors focus:outline-2 focus:outline-offset-2 hover:bg-zinc-100 dark:hover:bg-base-800 focus:outline-zinc-900 dark:focus:outline-base-100 h-7 rounded-md"
+            className="flex items-center justify-center w-full px-4 py-2 text-xs font-medium text-center text-base-900 dark:text-base-100 bg-white dark:bg-base-800 shadow-subtle duration-500 ease-in-out transition-colors focus:outline-2 focus:outline-offset-2 hover:bg-base-100 dark:hover:bg-base-800 focus:outline-base-900 dark:focus:outline-base-100 h-7 rounded-md"
             onClick={handleReset}
           >
             Reset
           </button>
           <button
-            className="flex items-center justify-center w-24 px-4 py-2 text-xs font-medium text-center text-zinc-900 dark:text-zinc-100 bg-white dark:bg-base-800 shadow-subtle duration-500 ease-in-out transition-colors focus:outline-2 focus:outline-offset-2 hover:bg-zinc-100 dark:hover:bg-base-800 focus:outline-zinc-900 dark:focus:outline-base-100 h-7 rounded-md"
+            className="flex items-center justify-center w-24 px-4 py-2 text-xs font-medium text-center text-base-900 dark:text-base-100 bg-white dark:bg-base-800 shadow-subtle duration-500 ease-in-out transition-colors focus:outline-2 focus:outline-offset-2 hover:bg-base-100 dark:hover:bg-base-800 focus:outline-base-900 dark:focus:outline-base-100 h-7 rounded-md"
             onClick={handleCopy}
           >
             {isCopied ? "Copied!" : "Copy"}
@@ -337,7 +421,7 @@ export default function GridGenerator() {
         </div>
       </div>
       <div className="mt-2">
-        <div className="shadow-oxbow border border-zinc-100 dark:border-white/10 rounded-xl overflow-hidden text-xs">
+        <div className="shadow-oxbow border border-base-200 dark:border-base-800 overflow-hidden scrollbar-hide text-xs bg-white">
           {highlightedCode ? (
             <div dangerouslySetInnerHTML={{ __html: highlightedCode }} />
           ) : (

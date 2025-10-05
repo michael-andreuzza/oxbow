@@ -3,6 +3,7 @@ export interface Template {
   name: string;
   image: string;
   tags: string[];
+  count?: number;
 }
 // Define the templates in a structured array format
 const templates: { [key: string]: Template[] } = {
@@ -772,6 +773,33 @@ const templates: { [key: string]: Template[] } = {
     },
   ],
 };
+
+const componentModules = import.meta.glob("@/components/oxbow/**/*.astro");
+const countsBySubsection = Object.keys(componentModules).reduce(
+  (acc, path) => {
+    const parts = path.split("/").slice(-3);
+    if (parts.length < 3) return acc;
+    const [section, subsection] = parts;
+    const key = `${section}/${subsection}`.toLowerCase();
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  },
+  {} as Record<string, number>
+);
+
+const linkToCountsKey = (link: string) => {
+  const match = link.match(/^\/playground\/([^?#]+)/i);
+  return match ? match[1].toLowerCase() : undefined;
+};
+
+Object.values(templates).forEach((group) => {
+  group.forEach((item) => {
+    const key = linkToCountsKey(item.link);
+    if (!key) return;
+    item.count = countsBySubsection[key] ?? 0;
+  });
+});
+
 // Export sections
 export const {
   // Marketing

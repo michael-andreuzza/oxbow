@@ -61,7 +61,7 @@ const groupedEntries = [
     }
   })()"
 >
-<Wrapper variant="standard" class="lg:sticky lg:top-16 z-50 border-t bg-white dark:bg-base-950 border-b border-base-200 dark:border-base-800">
+<Wrapper variant="standard" class="lg:sticky lg:top-16 z-50 border-t bg-beige dark:bg-base-950 border-b border-base-200 dark:border-base-800">
   
   <nav class="relative flex gap-6" role="tablist" aria-label="Components sections">
     
@@ -73,11 +73,11 @@ const groupedEntries = [
         @click.prevent="setTab($el.dataset.id)"
         :aria-selected={`tab === '${id}'`}
         class="relative py-3 text-xs font-medium transition-colors"
-        :class={`tab === '${id}' ? 'text-base-900 dark:text-white' : 'text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white'`}
+        :class={`tab === '${id}' ? 'text-base-900 dark:text-beige' : 'text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-beige'`}
       >
         {title}
         <span 
-          class="absolute bottom-0 left-0 right-0 h-0.5 bg-base-900 dark:bg-white transition-opacity"
+          class="absolute bottom-0 left-0 right-0 h-0.5 bg-base-900 dark:bg-beige transition-opacity"
           :class={`tab === '${id}' ? 'opacity-100' : 'opacity-0'`}
         ></span>
       </a>
@@ -127,7 +127,7 @@ const groupedEntries = [
                   </div>
                   </div>
                  <div class="relative w-full divide-y divide-base-800 lg:col-span-2 lg:border-l lg:border-base-200 lg:dark:border-base-800 ">
-                    <div class="lg:sticky lg:top-[6.5rem] z-40 pt-4 px-8  border-b border-base-200 dark:border-base-800 bg-white dark:bg-base-950">
+                    <div class="lg:sticky lg:top-[6.5rem] z-40 pt-4 px-8  border-b border-base-200 dark:border-base-800 bg-beige dark:bg-base-950">
                         {/* Nested tabs for groups */}
                         <nav class="flex items-center gap-4  " role="tablist" aria-label={`${title} groups`}>
                           {groups.map(({ id: groupId, label }) => (
@@ -137,11 +137,11 @@ const groupedEntries = [
                               data-id={groupId}
                               @click.prevent="setInner($el.dataset.id)"
                               class="relative pb-2 text-xs font-medium transition-colors"
-                              :class={`inner === '${groupId}' ? 'text-base-900 dark:text-white' : 'text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white'`}
+                              :class={`inner === '${groupId}' ? 'text-base-900 dark:text-beige' : 'text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-beige'`}
                             >
                               {label}
                               <span 
-                                class="absolute bottom-0 left-0 right-0 h-0.5 bg-base-900 dark:bg-white transition-opacity"
+                                class="absolute bottom-0 left-0 right-0 h-0.5 bg-base-900 dark:bg-beige transition-opacity"
                                 :class={`inner === '${groupId}' ? 'opacity-100' : 'opacity-0'`}
                               ></span>
                             </a>

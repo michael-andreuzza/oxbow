@@ -139,7 +139,7 @@ const nextNav = next
 ---
 
 <BaseLayout hideNav={true} hideFooter={true}>
-  <div class="lg:flex min-h-screen bg-white dark:bg-base-950">
+  <div class="lg:flex min-h-screen bg-beige dark:bg-base-950">
     <!-- Mobile overlay -->
     <div
       class="hidden fixed inset-0 z-40 bg-base-900/40 backdrop-blur-sm lg:hidden"
@@ -148,14 +148,14 @@ const nextNav = next
     </div>
     <!-- Sidebar -->
     <aside
-      class="hidden lg:flex fixed inset-y-0 left-0 z-50 w-62 -translate-x-full flex-col lg:border-r lg:border-base-200 dark:lg:border-base-800 gap-6 overflow-y-auto bg-white px-5 py- transition-transform duration-200 dark:bg-base-950 lg:translate-x-0 scrollbar-hide py-4"
+      class="hidden lg:flex fixed inset-y-0 left-0 z-50 w-62 -translate-x-full flex-col lg:border-r lg:border-base-200 dark:lg:border-base-800 gap-6 overflow-y-auto bg-beige px-5 py- transition-transform duration-200 dark:bg-base-950 lg:translate-x-0 scrollbar-hide py-4"
       data-docs-sidebar
     >
       <header class="gap-2">
         <div class="flex items-center justify-between">
           <a
             href="/"
-            class="flex items-center gap-3 text-sm font-medium  tracking-wide text-base-900 dark:text-base-50"
+            class="flex items-center gap-3 text-sm font-medium tracking-wide text-base-900 dark:text-base-50"
           >
             <Logo class="h-6 dark:invert" />
             <p class="-mt-1">oxbow ui</p>
@@ -176,13 +176,16 @@ const nextNav = next
       <nav class="flex-1 space-y-8 select-none">
         <div>
           <Text
-            class="text-[0.65rem] font-medium uppercase tracking-wide text-base-600 dark:text-white"
+            class="text-xs font-semibold uppercase tracking-wide text-base-600 dark:text-white"
           >
             Setup
           </Text>
           {
             combinedPinnedLinks.length > 0 && (
-              <div class="space-y-2 text-sm mt-2" data-docs-pinned>
+              <div
+                class="space-y-2 text-sm mt-2 font-semibold"
+                data-docs-pinned
+              >
                 {combinedPinnedLinks.map((link) => {
                   const isActive =
                     link.slug === activeSlug ||
@@ -194,7 +197,7 @@ const nextNav = next
                       class:list={[
                         "text-xs",
                         isActive
-                          ? "text-base-950 hover:text-base-600 dark:text-white dark:hover:text-base-400"
+                          ? "text-base-950 hover:text-base-600 dark:text-beige dark:hover:text-base-400"
                           : "text-base-600 hover:text-base-950 dark:text-base-400 dark:hover:text-white",
                       ]}
                     >
@@ -209,7 +212,7 @@ const nextNav = next
         {
           componentGroups.map((group) => (
             <details open class="group select-none">
-              <summary class="flex cursor-pointer items-center justify-between font-bold gap-2 text-[0.65rem] font-medium uppercase tracking-wide text-base-600  dark:text-base-400 ">
+              <summary class="flex cursor-pointer items-center justify-between font-bold gap-2 text-xs font-semibold uppercase tracking-wide text-base-600  dark:text-base-400 ">
                 <span>{group.title}</span>
                 <ChevronDown
                   class="ml-auto duration-300 ease-out transform group-open:-rotate-180 "
@@ -217,7 +220,7 @@ const nextNav = next
                   size="xs"
                 />
               </summary>
-              <ul class="space-y-2 text-sm mt-2">
+              <ul class="space-y-2 text-sm mt-2 font-semibold">
                 {group.items.map((item) => (
                   <li>
                     <a
@@ -225,7 +228,7 @@ const nextNav = next
                       class:list={[
                         "text-xs",
                         item.slug === activeSlug
-                          ? "text-base-950 hover:text-base-600 dark:text-white dark:hover:text-base-400"
+                          ? "text-base-950 hover:text-base-600 dark:text-beige dark:hover:text-base-400"
                           : "text-base-600 hover:text-base-950 dark:text-base-400 dark:hover:text-white",
                       ]}
                     >
@@ -240,7 +243,7 @@ const nextNav = next
         {
           blockGroups.length > 0 && (
             <details open class="group select-none">
-              <summary class="flex cursor-pointer items-center justify-between font-bold gap-2 text-[0.65rem] font-medium uppercase tracking-wide text-base-600  dark:group-open:text-base-400 dark:text-base-400 dark:group-open:text-base-200">
+              <summary class="flex cursor-pointer items-center justify-between font-semibold gap-2 text-xs font-medium uppercase tracking-wide text-base-600  dark:group-open:text-base-400 dark:text-base-400 dark:group-open:text-base-200">
                 <span>Blocks</span>
                 <ChevronDown
                   class="ml-auto duration-300 ease-out transform group-open:-rotate-180 "
@@ -251,10 +254,10 @@ const nextNav = next
               <div class="mt-3 space-y-8 ">
                 {blockGroups.map((group) => (
                   <div>
-                    <p class="text-xs font-semibold uppercase tracking-wide text-base-400 dark:text-base-500">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-base-500 dark:text-base-400">
                       {group.title}
                     </p>
-                    <ul class="space-y-2 text-sm mt-2">
+                    <ul class="space-y-2 text-sm mt-2 font-semibold">
                       {group.items.map((link) => (
                         <li>
                           <a
@@ -357,7 +360,7 @@ const nextNav = next
                     x-cloak
                     x-show="open"
                     x-transition.origin-top-right
-                    class="absolute right-0 z-20 mt-2 w-60 outline outline-base-200 bg-white p-2 shadow-lg focus:outline-none dark:outline-base-800 dark:bg-base-950"
+                    class="absolute right-0 z-20 mt-2 w-60 outline outline-base-200 bg-beige p-2 shadow-lg focus:outline-none dark:outline-base-800 dark:bg-base-950"
                     role="menu"
                     aria-labelledby="docs-tools-toggle"
                     x-on:keydown.escape.stop="open = false; if ($refs.docsToolsToggle) { $refs.docsToolsToggle.focus(); }"
@@ -365,7 +368,7 @@ const nextNav = next
                     <div class="flex flex-col">
                       <button
                         id="copy-markdown"
-                        class="text-base-900 dark:text-white hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
+                        class="text-base-900 dark:text-beige hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
                         role="menuitem"
                         x-ref="docsToolsFirst"
                         x-on:click="open = false"
@@ -375,7 +378,7 @@ const nextNav = next
                       </button>
                       <button
                         id="ask-chatgpt"
-                        class="text-base-900 dark:text-white hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
+                        class="text-base-900 dark:text-beige hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
                         role="menuitem"
                         x-on:click="open = false"
                       >
@@ -384,7 +387,7 @@ const nextNav = next
                       </button>
                       <button
                         id="ask-claude"
-                        class="text-base-900 dark:text-white hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
+                        class="text-base-900 dark:text-beige hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
                         role="menuitem"
                         x-on:click="open = false"
                       >
@@ -393,7 +396,7 @@ const nextNav = next
                       </button>
                       <a
                         href="#_"
-                        class="text-base-900 dark:text-white hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
+                        class="text-base-900 dark:text-beige hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
                         role="menuitem"
                         x-ref="docsToolsLast"
                         x-on:click="open = false"
@@ -414,7 +417,7 @@ const nextNav = next
                 aria-label="Documentation pagination"
                 class="grid gap-4 md:grid-cols-2 mt-24 border-t border-base-200 pt-8 dark:border-base-800"
               >
-                <a href={prevNav.href} class="group">
+                <a href={prevNav.href} class="group font-semibold">
                   <Text
                     tag="p"
                     variant="textXS"
@@ -425,12 +428,12 @@ const nextNav = next
                   <Text
                     tag="h3"
                     variant="textBase"
-                    class="text-base-600 group-hover:text-accent-600 mt-12"
+                    class="text-base-600 group-hover:text-accent-600 mt-4"
                   >
                     {prevNav.title}
                   </Text>
                 </a>
-                <a href={nextNav.href} class="group">
+                <a href={nextNav.href} class="group font-semibold">
                   <Text
                     tag="p"
                     variant="textXS"
@@ -441,7 +444,7 @@ const nextNav = next
                   <Text
                     tag="h3"
                     variant="textBase"
-                    class="text-base-600 group-hover:text-accent-600 mt-12"
+                    class="text-base-600 group-hover:text-accent-600 mt-4"
                   >
                     {nextNav.title}
                   </Text>
@@ -454,7 +457,7 @@ const nextNav = next
               <Text
                 variant="textSM"
                 tag="p"
-                class="text-xs font-medium uppercase tracking-wide text-base-400 dark:text-base-500 pl-4"
+                class="text-xs font-semibold uppercase tracking-wide text-base-500 dark:text-base-400 pl-4"
               >
                 On this page
               </Text>

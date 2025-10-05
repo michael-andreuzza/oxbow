@@ -14,6 +14,8 @@
   --font-sans: "Inter", sans-serif;
   --font-mono: "Geist Mono", monospace;
   /* Accents - British Racing Green */
+  --color-beige: #f7f7f4;
+  --color-beige-dark: #e4e1db;
   --color-accent-50: oklch(97% 0.015 155);
   --color-accent-100: oklch(94% 0.03 155);
   --color-accent-200: oklch(88% 0.06 155);

@@ -25,96 +25,93 @@ function flattenCommands(commands, parentTitles = []) {
 }
 
 // Build the Ninja-style command tree
-const buildCommands = () => [
-  {
-    id: "home",
-    title: "Home",
-    keywords: "home, index, root",
-    action: () => window.open("/", "_self"),
-  },
-  {
-    id: "website-templates",
-    title: "Astro & Tailwind CSS Templates",
-    keywords: "templates, website templates, Astro templates, Tailwind CSS templates, web design, theme, site templates, UI kits, front-end templates, responsive design, web development",
-    action: () => window.open("https://lexingtonthemes.com/", "_self"),
-  },
-  {
-    id: "docs",
-    title: "Documentation",
-    keywords: "docs, documentation, guides, tutorials, how-to ",
-    action: () => window.open("/documentation/getting-started", "_self"),
-  },
-  {
-    id: "changelog",
-    title: "Changelog",
-    keywords: "changelog, updates, new features, version history",
-    action: () => window.open("/changelog", "_self"),
-  },
-  {
-    id: "components",
-    title: "Components",
-    children: [
-      {
-        id: "marketing-components",
-        title: "Marketing Components",
-        children: [
-          ...pageSections.map(section => ({
-            id: section.name,
-            title: section.name,
-            keywords: section.tags.join(", "),
-            action: () => window.open(section.link, "_self"),
-          })),
-          ...pageExamples.map(example => ({
-            id: example.name,
-            title: example.name,
-            keywords: example.tags.join(", "),
-            action: () => window.open(example.link, "_self"),
-          })),
-        ],
-      },
-      {
-        id: "application-components",
-        title: "Application Components",
-        children: [
-          ...elements.map(element => ({
-            id: element.name,
-            title: element.name,
-            keywords: element.tags.join(", "),
-            action: () => window.open(element.link, "_self"),
-          })),
-          ...navigation.map(nav => ({
-            id: nav.name,
-            title: nav.name,
-            keywords: nav.tags.join(", "),
-            action: () => window.open(nav.link, "_self"),
-          })),
-          ...overlay.map(ov => ({
-            id: ov.name,
-            title: ov.name,
-            keywords: ov.tags.join(", "),
-            action: () => window.open(ov.link, "_self"),
-          })),
-          ...forms.map(form => ({
-            id: form.name,
-            title: form.name,
-            keywords: form.tags.join(", "),
-            action: () => window.open(form.link, "_self"),
-          })),
-        ],
-      },
-      {
-        id: "ecommerce-components",
-        title: "Ecommerce Components",
-        children: storeSections.map(section => ({
-          id: section.name,
-          title: section.name,
-          keywords: section.tags.join(", "),
-          action: () => window.open(section.link, "_self"),
-        })),
-      },
-    ],
-  },
-];
+const buildCommands = () => {
+  const sumCounts = (items: { count?: number }[]) =>
+    items.reduce((acc, item) => acc + (item.count ?? 0), 0);
+
+  const marketingEntries = [...pageSections, ...pageExamples];
+  const marketingChildren = marketingEntries.map(section => ({
+    id: section.name,
+    title: section.name,
+    keywords: section.tags.join(", "),
+    count: section.count ?? 0,
+    action: () => window.open(section.link, "_self"),
+  }));
+  const marketingTotal = sumCounts(marketingChildren);
+
+  const applicationEntries = [...elements, ...navigation, ...overlay, ...forms];
+  const applicationChildren = applicationEntries.map(entry => ({
+    id: entry.name,
+    title: entry.name,
+    keywords: entry.tags.join(", "),
+    count: entry.count ?? 0,
+    action: () => window.open(entry.link, "_self"),
+  }));
+  const applicationTotal = sumCounts(applicationChildren);
+
+  const ecommerceChildren = storeSections.map(section => ({
+    id: section.name,
+    title: section.name,
+    keywords: section.tags.join(", "),
+    count: section.count ?? 0,
+    action: () => window.open(section.link, "_self"),
+  }));
+  const ecommerceTotal = sumCounts(ecommerceChildren);
+
+  const totalComponents = marketingTotal + applicationTotal + ecommerceTotal;
+
+  return [
+    {
+      id: "home",
+      title: "Home",
+      keywords: "home, index, root",
+      action: () => window.open("/", "_self"),
+    },
+    {
+      id: "website-templates",
+      title: "Astro & Tailwind CSS Templates",
+      keywords: "templates, website templates, Astro templates, Tailwind CSS templates, web design, theme, site templates, UI kits, front-end templates, responsive design, web development",
+      action: () => window.open("https://lexingtonthemes.com/", "_self"),
+    },
+    {
+      id: "docs",
+      title: "Documentation",
+      keywords: "docs, documentation, guides, tutorials, how-to ",
+      action: () => window.open("/documentation/getting-started", "_self"),
+    },
+    {
+      id: "changelog",
+      title: "Changelog",
+      keywords: "changelog, updates, new features, version history",
+      action: () => window.open("/changelog", "_self"),
+    },
+    {
+      id: "components",
+      title: "Components",
+      count: totalComponents,
+      children: [
+        {
+          id: "marketing-components",
+          title: "Marketing Components",
+          count: marketingTotal,
+          children: marketingChildren,
+        },
+        {
+          id: "application-components",
+          title: "Application Components",
+          count: applicationTotal,
+          children: applicationChildren,
+        },
+        {
+          id: "ecommerce-components",
+          title: "Ecommerce Components",
+          count: ecommerceTotal,
+          children: ecommerceChildren,
+        },
+      ],
+    },
+  ];
+};
 
 
 export default function CommandBar() {
@@ -188,7 +185,7 @@ export default function CommandBar() {
       onClick={() => setOpen(false)}
     >
       <div
-        className="relative w-full max-w-xl transition-colors shadow-xl bg-white divide-y divide-base-200 dark:bg-base-950 dark:divide-base-800 outline outline-base-300 dark:outline-base-700 "
+        className="relative w-full max-w-xl transition-colors shadow-xl bg-beige divide-y divide-base-200 dark:bg-base-950 dark:divide-base-800 outline outline-base-300 dark:outline-base-700 "
         role="dialog"
         aria-modal="true"
         aria-label="Command Bar"
@@ -202,7 +199,7 @@ export default function CommandBar() {
           )}
           <input
             ref={inputRef}
-            className="w-full px-3 py-2 bg-white dark:bg-base-900 text-base-900 dark:text-base-100 outline-none  border border-none dark:border-none focus:ring-2 focus:ring-secondary-400 placeholder:text-base-400 dark:placeholder:text-base-500"
+            className="w-full px-3 py-2 bg-beige dark:bg-base-900 text-base-900 dark:text-base-100 outline-none  border border-none dark:border-none focus:ring-2 focus:ring-secondary-400 placeholder:text-base-400 dark:placeholder:text-base-500"
             placeholder={stack.length > 0 ? `Search ${stack[stack.length-1].title}...` : "Type a command..."}
             value={query}
             onChange={e => { setQuery(e.target.value); setSelected(0); }}
@@ -285,7 +282,14 @@ export default function CommandBar() {
                 }}
               >
                 <span>{cmd.title}</span>
-                {cmd.children && <ChevronRight className="w-4 h-4 text-base-400" aria-label="submenu" />}
+                <span className="flex items-center gap-2">
+                  {typeof cmd.count === "number" && (
+                    <span className=" text-xs font-mono text-base-600  dark:text-base-200">
+                      {cmd.count}
+                    </span>
+                  )}
+                  {cmd.children && <ChevronRight className="w-4 h-4 text-base-400" aria-label="submenu" />}
+                </span>
               </li>
             ))}
           </ul>

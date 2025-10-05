@@ -43,27 +43,27 @@ const breadcrumbs = [
   >
     <Wrapper variant="narrow">
       <nav aria-label="Breadcrumb">
-        <ol class="flex items-center text-[0.60rem] gap-x-2 text-base-400">
+        <ol class="flex items-center text-xs gap-x-1 text-base-400">
           {
             breadcrumbs.map((item, index) => (
               <>
-                <li class="max-w-xs">
+                <li class="max-w-xs font-medium">
                   {index < breadcrumbs.length - 1 ? (
                     <a
                       href={item.href}
-                      class=" hover:text-accent-300 truncate block"
+                      class=" hover:text-secondary-300 truncate block"
                     >
                       {item.label}
                     </a>
                   ) : (
-                    <span class=" text-accent-300 truncate block">
+                    <span class=" text-secondary-500 truncate block">
                       {item.label}
                     </span>
                   )}
                 </li>
                 {index < breadcrumbs.length - 1 && (
                   <li class="text-base-400 flex-shrink-0">
-                    <ChevronRight size="sm" />
+                    <ChevronRight size="xs" />
                   </li>
                 )}
               </>

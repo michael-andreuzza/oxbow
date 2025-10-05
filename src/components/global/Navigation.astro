@@ -11,7 +11,7 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 ---
 
 <div
-  class="fixed top-0 left-0 right-0 z-50 items-center w-full mx-auto duration-300 bg-white dark:bg-base-950"
+  class="fixed top-0 left-0 right-0 z-50 items-center w-full mx-auto duration-300 bg-beige dark:bg-base-950"
   x-data="navigation()"
 >
   <Wrapper variant="nav" class="w-full">
@@ -22,11 +22,11 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
       <div class="flex flex-row items-center justify-between lg:justify-start">
         <a
           href="/"
-          class="flex items-center w-full gap-2 sm:w-auto text-base-900 dark:text-white"
+          class="flex items-center w-full gap-2 sm:w-auto text-base-900 dark:text-beige"
           ><Logo class="h-7 dark:invert" /> <p class="-mt-1">oxbow ui</p></a
         >
         <button
-          class="flex items-center text-base-900 dark:text-white cursor-pointer sm:hidden"
+          class="flex items-center text-base-900 dark:text-beige cursor-pointer sm:hidden"
           onclick="document.querySelector('ninja-keys').open()"
         >
           <Search class="size-4" />
@@ -34,7 +34,7 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
         <button
           aria-label="open"
           @click="open = !open"
-          class="inline-flex items-center justify-center p-2 text-base-900 dark:text-white focus:outline-none focus:text-base-400 md:hidden"
+          class="inline-flex items-center justify-center p-2 text-base-900 dark:text-beige focus:outline-none focus:text-base-400 md:hidden"
           ><svg
             viewBox="0 0 24 24"
             class="size-6"
@@ -75,14 +75,14 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
             tag="a"
             variant="textXS"
             href="https://lexingtonthemes.com"
-            class="hover:text-base-600 dark:hover:text-white font-medium"
+            class="hover:text-base-600 dark:hover:text-beige font-medium"
             >Astro Templates</Text
           >
           <Text
             tag="a"
             variant="textXS"
             href="https://github.com/UnwrappedDesign/oxbow"
-            class="hover:text-base-600 dark:hover:text-white font-medium"
+            class="hover:text-base-600 dark:hover:text-beige font-medium"
             >GitHub</Text
           >
           <Text
@@ -90,7 +90,7 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
             tag="a"
             variant="textXS"
             href="/documentation/getting-started"
-            class="hover:text-base-600 dark:hover:text-white font-medium"
+            class="hover:text-base-600 dark:hover:text-beige font-medium"
             >Documentation</Text
           >
           <Text
@@ -98,7 +98,7 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
             tag="a"
             variant="textXS"
             href="/changelog"
-            class="hover:text-base-600 dark:hover:text-white font-medium"
+            class="hover:text-base-600 dark:hover:text-beige font-medium"
             >Changelog</Text
           >
           <ThemeToggle />

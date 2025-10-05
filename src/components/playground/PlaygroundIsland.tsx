@@ -471,7 +471,7 @@ export default function PlaygroundIsland({
               <div className="relative">
                 <button
                   onClick={(e) => openNavMenu("idx", e)}
-                  className="hidden md:flex items-center gap-2  text-xs transition-colors text-base-900 hover:text-accent-600 dark:text-white dark:hover:text-accent-400"
+                  className="hidden md:flex items-center gap-2  text-xs transition-colors text-base-900 hover:text-accent-600 dark:text-beige dark:hover:text-accent-400"
                 >
                  <div>
                     <span>#</span>
@@ -495,7 +495,7 @@ export default function PlaygroundIsland({
               {navOpen === "cat" && (
                 <div
                   ref={navMenuRef}
-                  className="fixed z-50 w-56 mt-2 text-xs transition-colors bg-white shadow  outline outline-base-100 text-base-600 divide-y divide-base-100 dark:bg-base-950 dark:text-base-300 dark:outline-base-800 dark:divide-base-800"
+                  className="fixed z-50 w-56 mt-2 text-xs transition-colors bg-beige shadow  outline outline-base-100 text-base-600 divide-y divide-base-100 dark:bg-base-950 dark:text-base-300 dark:outline-base-800 dark:divide-base-800"
                   style={{ top: navPos.top, left: navPos.left }}
                 >
                   <div className="py-2 overflow-hidden max-h-64">
@@ -525,7 +525,7 @@ export default function PlaygroundIsland({
               {navOpen === "sub" && (
                 <div
                   ref={navMenuRef}
-                  className="fixed z-50 w-64 mt-2 text-xs transition-colors bg-white shadow-lg outline outline-base-100 text-base-600 divide-y divide-base-100 dark:bg-base-950 dark:text-base-300 dark:outline-base-800 dark:divide-base-800"
+                  className="fixed z-50 w-64 mt-2 text-xs transition-colors bg-beige shadow-lg outline outline-base-100 text-base-600 divide-y divide-base-100 dark:bg-base-950 dark:text-base-300 dark:outline-base-800 dark:divide-base-800"
                   style={{ top: navPos.top, left: navPos.left }}
                 >
                   <div className="py-2 overflow-auto max-h-64">
@@ -549,7 +549,7 @@ export default function PlaygroundIsland({
               {navOpen === "idx" && (
                 <div
                   ref={navMenuRef}
-                  className="fixed z-50 w-40 mt-2 text-xs transition-colors bg-white shadow-lg outline outline-base-100 text-base-600 dark:bg-base-900 dark:text-base-300 dark:outline-base-700"
+                  className="fixed z-50 w-40 mt-2 text-xs transition-colors bg-beige shadow-lg outline outline-base-100 text-base-600 dark:bg-base-900 dark:text-base-300 dark:outline-base-700"
                   style={{ top: navPos.top, left: navPos.left }}
                 >
                   <div className="grid grid-cols-4 gap-2 px-2 py-2 overflow-auto max-h-64">
@@ -605,14 +605,14 @@ export default function PlaygroundIsland({
           )}
         </div>
       </div>
-      <div className="relative flex w-full min-h-0 overflow-hidden outline outline-base-200 dark:outline-base-800  shadow-oxbow dark:shadow-base-900/50 z-1 isolate scrollbar-hide bg-white dark:bg-base-950/60 mt-4">
+      <div className="relative flex w-full min-h-0 overflow-hidden outline outline-base-200 dark:outline-base-800  shadow-oxbow dark:shadow-base-900/50 z-1 isolate scrollbar-hide bg-beige dark:bg-base-950/60 mt-4">
         <PlaygroundShortcutsButton />
         {tab === "preview" && (
-          <div className="flex flex-col items-center w-full bg-white scrollbar-hide dark:bg-base-950/60">
+          <div className="flex flex-col items-center w-full bg-beige scrollbar-hide dark:bg-base-950/60">
             <div
               ref={containerRef}
               id="playground-preview-container"
-              className="flex flex-col w-full mx-auto text-base transition-colors bg-white shadow-normal scrollbar-hide dark:bg-base-950/80"
+              className="flex flex-col w-full mx-auto text-base transition-colors bg-beige shadow-normal scrollbar-hide dark:bg-base-950/80"
               style={{
                 transition: "width 250ms ease-in-out, height 200ms ease",
               }}
