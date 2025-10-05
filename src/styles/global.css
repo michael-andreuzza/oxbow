@@ -93,12 +93,6 @@
 }
 /* Ensure a stable vertical scrollbar to avoid layout shift */
 html { overflow-y: auto; scrollbar-gutter: stable; }
-/* Hide Firebase emulator warning banners */
-.firebase-emulator-warning,
-.firegray-emulator-warning {
-  display: none !important;
-  visibility: hidden !important;
-}
 /* Styling  Ninja Keys */
 ninja-keys::part(ninja-input) {
   font-size: 1rem;

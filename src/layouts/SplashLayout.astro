@@ -1,16 +1,14 @@
 ---
-import { getAuth } from "firebase-admin/auth";
-
 import BaseHead from "@/components/BaseHead.astro";
 import Navigation from "@/components/global/Navigation.astro";
 import Footer from "@/components/global/Footer.astro";
 import NinjaScript from "@/components/commandBar/NinjaScript.astro";
-import { app } from "@/firebase/server";
-const auth = getAuth(app);
-const uid = Astro.locals.user?.uid;
-const customToken = uid ? await auth.createCustomToken(uid) : null;
+
 const siteUrl = (Astro.site && Astro.site.toString()) || "https://oxbowui.com";
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? siteUrl).toString();
+const canonicalUrl = new URL(
+  Astro.url.pathname,
+  Astro.site ?? siteUrl
+).toString();
 const privatePaths = [
   /^\/404$/,
   /^\/login(\b|\/)/,
@@ -31,8 +29,10 @@ interface HeadOverrides {
   noindex?: boolean;
   structuredData?: any | any[];
 }
-const { title, description, image, noindex, structuredData }: HeadOverrides = (Astro.props ?? {}) as HeadOverrides;
+const { title, description, image, noindex, structuredData }: HeadOverrides =
+  (Astro.props ?? {}) as HeadOverrides;
 ---
+
 <html lang="en" class="scroll-smooth">
   <head>
     <BaseHead
@@ -47,40 +47,8 @@ const { title, description, image, noindex, structuredData }: HeadOverrides = (A
     />
   </head>
   <body class="bg-[#f7f7f7]" style="background-color:#f7f7f7">
-
     <main class="grow z-1">
       <slot />
     </main>
-    <astro-firebase data-customtoken={customToken}></astro-firebase>
-    <script>
-      import {
-        inMemoryPersistence,
-        signInWithCustomToken,
-      } from "firebase/auth";
-      import { auth } from "@/firebase/client";
-      class AstroFirebase extends HTMLElement {
-        constructor() {
-          super();
-          const customToken = this.dataset.customtoken;
-          if (customToken) {
-            auth.setPersistence(inMemoryPersistence);
-            signInWithCustomToken(auth, customToken)
-              .then((credentials) => {
-                window.umami?.track("login", {
-                  id: credentials.user.uid,
-                });
-                window.umami?.identify({
-                  id: credentials.user.uid,
-                });
-                console.log("Successfully signed in with custom token");
-              })
-              .catch((error) => {
-                console.error("Error signing in with custom token", error);
-              });
-          }
-        }
-      }
-      customElements.define("astro-firebase", AstroFirebase);
-    </script>
   </body>
 </html>

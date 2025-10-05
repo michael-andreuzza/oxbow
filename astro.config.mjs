@@ -5,19 +5,12 @@ import sitemap from "@astrojs/sitemap";
 import alpinejs from "@astrojs/alpinejs";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-import { loadEnv } from "vite";
 
 import react from "@astrojs/react";
 
-const { PUBLIC_APP_BASE_URL } = loadEnv(
-  process.env.NODE_ENV,
-  process.cwd(),
-  "",
-);
+// Use node adapter for development, netlify for production
+const localhost = process.env.NODE_ENV === "development";
 
-const localhost = PUBLIC_APP_BASE_URL?.includes("localhost") ?? false;
-
-console.log("Loading app with PUBLIC_APP_BASE_URL: ", PUBLIC_APP_BASE_URL);
 console.log("Loading app with NODE_ENV: ", process.env.NODE_ENV);
 
 // https://astro.build/config

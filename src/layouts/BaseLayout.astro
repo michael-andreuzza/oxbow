@@ -1,14 +1,10 @@
 ---
-import { getAuth } from "firebase-admin/auth";
 import BaseHead from "@/components/BaseHead.astro";
 import Navigation from "@/components/global/Navigation.astro";
 import Footer from "@/components/global/Footer.astro";
 import NinjaScript from "@/components/commandBar/NinjaScript.astro";
 import CopyButton from "@/components/documentation/CopyButton.astro";
-import { app } from "@/firebase/server";
-const auth = getAuth(app);
-const uid = Astro.locals.user?.uid;
-const customToken = uid ? await auth.createCustomToken(uid) : null;
+
 const siteUrl = (Astro.site && Astro.site.toString()) || "https://oxbowui.com";
 const canonicalUrl = new URL(
   Astro.url.pathname,
@@ -68,7 +64,7 @@ const isDocsPage = Astro.url.pathname.startsWith("/documentation");
     >
       <slot />
     </main>
-    {!hideFooter && <Footer isSignedIn={!!uid} />}
+    {!hideFooter && <Footer />}
     <ninja-keys
       id="ninja"
       class="dark"
@@ -78,82 +74,6 @@ const isDocsPage = Astro.url.pathname.startsWith("/documentation");
       <slot name="footer" />
     </ninja-keys>
     <NinjaScript />
-    <astro-firebase data-customtoken={customToken}></astro-firebase>
-    <script is:inline>
-      // Hide Firebase emulator warning (root + iframes), resilient to dynamic insertion
-      (function () {
-        const SEL = ".firebase-emulator-warning, .firegray-emulator-warning";
-        const hideIn = (doc) => {
-          try {
-            doc.querySelectorAll(SEL).forEach((el) => {
-              el.style.setProperty("display", "none", "important");
-              el.style.setProperty("visibility", "hidden", "important");
-            });
-          } catch {}
-        };
-        const observeDoc = (doc) => {
-          hideIn(doc);
-          try {
-            const mo = new MutationObserver(() => hideIn(doc));
-            mo.observe(doc.documentElement || doc, {
-              childList: true,
-              subtree: true,
-            });
-          } catch {}
-        };
-        const scan = () => {
-          observeDoc(document);
-          // Same-origin iframes (our /iframe pages) — hook load + observe
-          document.querySelectorAll("iframe").forEach((ifr) => {
-            try {
-              const onLoad = () => {
-                const d = ifr.contentDocument || ifr.contentWindow?.document;
-                if (d) observeDoc(d);
-              };
-              ifr.addEventListener("load", onLoad, { once: false });
-              onLoad();
-            } catch {}
-          });
-        };
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", scan, { once: true });
-        } else {
-          scan();
-        }
-        window.addEventListener("astro:page-load", scan);
-        window.addEventListener("astro:after-swap", scan);
-      })();
-    </script>
-    <script>
-      import {
-        inMemoryPersistence,
-        signInWithCustomToken,
-      } from "firebase/auth";
-      import { auth } from "@/firebase/client";
-      class AstroFirebase extends HTMLElement {
-        constructor() {
-          super();
-          const customToken = this.dataset.customtoken;
-          if (customToken) {
-            auth.setPersistence(inMemoryPersistence);
-            signInWithCustomToken(auth, customToken)
-              .then((credentials) => {
-                window.umami?.track("login", {
-                  id: credentials.user.uid,
-                });
-                window.umami?.identify({
-                  id: credentials.user.uid,
-                });
-                console.log("Successfully signed in with custom token");
-              })
-              .catch((error) => {
-                console.error("Error signing in with custom token", error);
-              });
-          }
-        }
-      }
-      customElements.define("astro-firebase", AstroFirebase);
-    </script>
     <CopyButton targetSelector="pre" />
   </body>
 </html>

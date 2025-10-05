@@ -4,8 +4,6 @@ import ui from "@alpinejs/ui";
 import focus from "@alpinejs/focus";
 import Clipboard from "@ryangjchandler/alpine-clipboard";
 import intersect from "@alpinejs/intersect";
-import { auth } from "@/firebase/client";
-import { sendSignInLinkToEmail } from "firebase/auth";
 import { createHighlighter } from "shiki";
 import { createCssVariablesTheme } from "shiki";
 
@@ -31,7 +29,6 @@ export default (Alpine: Alpine) => {
   Alpine.data("navigation", () => ({
     username: "",
     async signOut() {
-      await auth.signOut();
       window.location.assign("/api/auth/signout");
     },
   }));
@@ -107,31 +104,8 @@ export default (Alpine: Alpine) => {
       this.errorMessage = "";
     },
     async sendEmail() {
-      const baseUrl = import.meta.env.PUBLIC_APP_BASE_URL;
-      const actionCodeSettings = {
-        url: `${baseUrl}/email-signin`,
-        handleCodeInApp: true,
-      };
-      try {
-        window.localStorage.setItem("emailForSignIn", this.email);
-        await sendSignInLinkToEmail(auth, this.email, actionCodeSettings);
-        this.emailSent = true;
-      } catch (error) {
-        console.log("error", error.code, error.message);
-        if (error.code === "auth/admin-restricted-operation") {
-          console.log("error auth/admin-restricted-operation");
-          this.errorMessage = [
-            "We couldn't find an account linked to this email address.",
-            "Please check the email address or create a new account.",
-          ].join(" ");
-        } else {
-          console.log("error else");
-          this.errorMessage = [
-            "We were unable to send the sign-in link to your email.",
-            "Please check your email address and try again.",
-          ].join(" ");
-        }
-      }
+      // Login functionality removed
+      this.errorMessage = "Authentication is no longer available.";
     },
   }));
 
@@ -221,10 +195,6 @@ export default (Alpine: Alpine) => {
           );
         });
 
-      // Save the theme preference to Firebase
-      this.saveThemePreference(color);
-
-      // Check if we need to refresh the page
       // Only refresh if the color actually changed (not just clicking the same color)
       if (prevSelected.toLowerCase() !== selectedColorLower) {
         // If the new color is different from the originally rendered color
@@ -303,49 +273,12 @@ export default (Alpine: Alpine) => {
         window.location.href = url.toString();
       }
     },
-    async saveThemePreference(theme: string) {
-      // Only save theme preference if user is authenticated
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          await fetch("/api/user/theme", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ themeColor: theme }),
-          });
-        } catch (error) {
-          console.error("Error saving theme preference:", error);
-        }
-      }
-    },
     async loadUserThemePreference() {
-      // First try to get theme from user's Firebase claims
-      const user = auth.currentUser;
+      // Load from localStorage only (no Firebase)
       let themeLoaded = false;
       let loadedTheme = "blue";
 
-      if (user) {
-        try {
-          // Get the user's idToken which contains custom claims
-          const idToken = await user.getIdTokenResult();
-          const themeColor = idToken.claims.themeColor as string | undefined;
-
-          // If user has a saved theme preference, use it
-          if (themeColor) {
-            // Capitalize first letter for the selected property
-            this.selected =
-              themeColor.charAt(0).toUpperCase() + themeColor.slice(1);
-            loadedTheme = themeColor.toLowerCase();
-            themeLoaded = true;
-          }
-        } catch (error) {
-          console.error("Error loading theme preference from Firebase:", error);
-        }
-      }
-
-      // Fallback to localStorage if no claims or not logged in
+      // Fallback to localStorage
       if (!themeLoaded) {
         try {
           const localTheme = localStorage.getItem("oxbow_theme_color");
@@ -409,13 +342,13 @@ export default (Alpine: Alpine) => {
     code: string;
     copied: boolean;
     theme: string;
-    mode: 'light' | 'system' | 'dark';
+    mode: "light" | "system" | "dark";
     copyCode(): void;
     setTab(tab: Playground["tab"]): void;
     setViewportSize(size: Playground["viewportSize"]): void;
     setCode(code: string): void;
     setTheme(theme: string): void;
-    setColorMode(mode: 'light' | 'system' | 'dark'): void;
+    setColorMode(mode: "light" | "system" | "dark"): void;
     stripDarkClasses(s: string): string;
   };
 
@@ -476,29 +409,42 @@ export default (Alpine: Alpine) => {
       viewportSize: "desktop",
       code: "",
       theme: "",
-      mode: 'system',
+      mode: "system",
       copyCode() {
         this.copied = true;
-        let text = '';
-        if (this.tab === 'theme') {
-          text = this.$refs.theme?.innerText || '';
+        let text = "";
+        if (this.tab === "theme") {
+          text = this.$refs.theme?.innerText || "";
         } else {
-          const el = this.mode === 'light' ? this.$refs.codeLight : (this.mode === 'dark' ? this.$refs.codeDarkOnly : this.$refs.codeSystem);
-          text = el?.innerText || '';
+          const el =
+            this.mode === "light"
+              ? this.$refs.codeLight
+              : this.mode === "dark"
+                ? this.$refs.codeDarkOnly
+                : this.$refs.codeSystem;
+          text = el?.innerText || "";
         }
         try {
           if (navigator?.clipboard?.writeText) {
             navigator.clipboard.writeText(text);
-          } else if (typeof this.$clipboard === 'function') {
+          } else if (typeof this.$clipboard === "function") {
             this.$clipboard(text);
           } else {
-            const ta = document.createElement('textarea');
-            ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            ta.remove();
           }
         } catch (e) {
           try {
-            const ta = document.createElement('textarea');
-            ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            ta.remove();
           } catch {}
         }
 
@@ -531,9 +477,19 @@ export default (Alpine: Alpine) => {
           setTimeout(() => {
             this.setTheme(originalTheme);
             try {
-              const iframe = (this as any).$el.querySelector('iframe');
-              iframe?.contentWindow?.postMessage({ type: 'oxbow-request-height' }, '*');
-              setTimeout(() => iframe?.contentWindow?.postMessage({ type: 'oxbow-request-height' }, '*'), 200);
+              const iframe = (this as any).$el.querySelector("iframe");
+              iframe?.contentWindow?.postMessage(
+                { type: "oxbow-request-height" },
+                "*",
+              );
+              setTimeout(
+                () =>
+                  iframe?.contentWindow?.postMessage(
+                    { type: "oxbow-request-height" },
+                    "*",
+                  ),
+                200,
+              );
             } catch {}
           }, 400);
         }
@@ -587,54 +543,87 @@ export default (Alpine: Alpine) => {
           theme: "css-variables",
         });
       },
-      setColorMode(mode: 'light' | 'system' | 'dark') {
+      setColorMode(mode: "light" | "system" | "dark") {
         this.mode = mode;
         const apply = (prefersDark?: boolean) => {
           try {
-            const iframe = (this as any).$el.querySelector('iframe') as HTMLIFrameElement | null;
-            const doc = iframe?.contentDocument || iframe?.contentWindow?.document;
-            const html = doc?.documentElement; const body = doc?.body;
+            const iframe = (this as any).$el.querySelector(
+              "iframe",
+            ) as HTMLIFrameElement | null;
+            const doc =
+              iframe?.contentDocument || iframe?.contentWindow?.document;
+            const html = doc?.documentElement;
+            const body = doc?.body;
             if (!html) return;
-            const enableDark = mode === 'dark' || (mode === 'system' && !!prefersDark);
-            html.classList.toggle('dark', enableDark);
-            body?.classList.toggle('dark', enableDark);
-            try { if (enableDark) { html.setAttribute('data-theme','dark'); body?.setAttribute('data-theme','dark'); } else { html.removeAttribute('data-theme'); body?.removeAttribute('data-theme'); } } catch {}
+            const enableDark =
+              mode === "dark" || (mode === "system" && !!prefersDark);
+            html.classList.toggle("dark", enableDark);
+            body?.classList.toggle("dark", enableDark);
+            try {
+              if (enableDark) {
+                html.setAttribute("data-theme", "dark");
+                body?.setAttribute("data-theme", "dark");
+              } else {
+                html.removeAttribute("data-theme");
+                body?.removeAttribute("data-theme");
+              }
+            } catch {}
             // Also notify the iframe so it can self-apply even if DOM not yet reachable
-            try { iframe?.contentWindow?.postMessage({ type: 'oxbow-set-dark', enable: enableDark }, '*'); } catch {}
+            try {
+              iframe?.contentWindow?.postMessage(
+                { type: "oxbow-set-dark", enable: enableDark },
+                "*",
+              );
+            } catch {}
             // Nudge height in case layout changes
-            setTimeout(() => { try { iframe?.contentWindow?.postMessage({ type: 'oxbow-request-height' }, '*'); } catch {} }, 50);
-            setTimeout(() => { try { iframe?.contentWindow?.postMessage({ type: 'oxbow-request-height' }, '*'); } catch {} }, 250);
+            setTimeout(() => {
+              try {
+                iframe?.contentWindow?.postMessage(
+                  { type: "oxbow-request-height" },
+                  "*",
+                );
+              } catch {}
+            }, 50);
+            setTimeout(() => {
+              try {
+                iframe?.contentWindow?.postMessage(
+                  { type: "oxbow-request-height" },
+                  "*",
+                );
+              } catch {}
+            }, 250);
           } catch {}
         };
         try {
-          if (mode === 'system') {
-            const mq = window.matchMedia('(prefers-color-scheme: dark)');
+          if (mode === "system") {
+            const mq = window.matchMedia("(prefers-color-scheme: dark)");
             // Save ref so we can remove when leaving system
-            (this as any)._mq && mq.removeEventListener('change', (this as any)._mq);
+            (this as any)._mq &&
+              mq.removeEventListener("change", (this as any)._mq);
             const listener = (e: MediaQueryListEvent) => apply(e.matches);
             (this as any)._mq = listener;
-            mq.addEventListener('change', listener);
+            mq.addEventListener("change", listener);
             apply(mq.matches);
           } else {
             // Leaving system mode: detach previous listener if any
-            const mq = window.matchMedia('(prefers-color-scheme: dark)');
+            const mq = window.matchMedia("(prefers-color-scheme: dark)");
             if ((this as any)._mq) {
-              mq.removeEventListener('change', (this as any)._mq);
+              mq.removeEventListener("change", (this as any)._mq);
               (this as any)._mq = null;
             }
-            apply(mode === 'dark');
+            apply(mode === "dark");
           }
         } catch {
-          apply(mode === 'dark');
+          apply(mode === "dark");
         }
       },
       stripDarkClasses(s: string): string {
         try {
           // Remove Tailwind dark: prefixed classes across the code text
-          let out = s.replace(/(^|\s)dark:[^\s"'>]+/g, ' ');
+          let out = s.replace(/(^|\s)dark:[^\s"'>]+/g, " ");
           // Tidy up excessive spaces on lines
-          out = out.replace(/\t+/g, '  ');
-          out = out.replace(/ +/g, ' ');
+          out = out.replace(/\t+/g, "  ");
+          out = out.replace(/ +/g, " ");
           return out;
         } catch {
           return s;

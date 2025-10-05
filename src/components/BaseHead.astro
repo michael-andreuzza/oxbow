@@ -2,7 +2,7 @@
 import "@/styles/global.css";
 import { AstroSeo } from "@astrolib/seo";
 import ToggleLocalStorage from "@/components/fundations/scripts/ToggleLocalStorage.astro";
-const toltId = import.meta.env.PUBLIC_TOLT_ID;
+
 // Optional SEO props provided by layouts/pages
 interface Props {
   title?: string;
@@ -169,11 +169,7 @@ const jsonLdCombined = Array.isArray(additionalStructured)
   is:inline
   set:html={JSON.stringify(jsonLdCombined)}
 />
-<script
-  defer
-  data-website-id="6899fc4eda474e338473cad8"
-  data-domain="oxbowui.com"
-  src="https://datafa.st/js/script.js"></script>
+
 <ToggleLocalStorage />
 <!-- Inter Font: https://rsms.me/inter/ -->
 <link rel="preconnect" href="https://rsms.me/" />
