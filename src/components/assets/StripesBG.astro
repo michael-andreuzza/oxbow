@@ -1,3 +1,4 @@
+
 ---
 const {
   class: className = "",
@@ -8,20 +9,23 @@ const {
 
 const variantClass = {
   base: {
-    vertical: "bg-base-vertical-stripes",
-    horizontal: "bg-base-horizontal-stripes",
+    vertical: "bg-base-vertical-stripes dark:bg-light-vertical-stripes",
+    horizontal: "bg-base-horizontal-stripes dark:bg-light-horizontal-stripes",
   },
   accent: {
-    vertical: "bg-accent-vertical-stripes",
-    horizontal: "bg-accent-horizontal-stripes",
+    vertical: "bg-accent-vertical-stripes dark:bg-accent-vertical-stripes-dark",
+    horizontal:
+      "bg-accent-horizontal-stripes dark:bg-accent-horizontal-stripes-dark",
   },
-  pink: {
-    vertical: "bg-pink-vertical-stripes",
-    horizontal: "bg-pink-horizontal-stripes",
+  secondary: {
+    vertical:
+      "bg-secondary-vertical-stripes dark:bg-secondary-vertical-stripes-dark",
+    horizontal:
+      "bg-secondary-horizontal-stripes dark:bg-secondary-horizontal-stripes-dark",
   },
   light: {
-    vertical: "bg-light-vertical-stripes",
-    horizontal: "bg-light-horizontal-stripes",
+    vertical: "bg-light-vertical-stripes dark:bg-base-vertical-stripes",
+    horizontal: "bg-light-horizontal-stripes dark:bg-base-horizontal-stripes",
   },
 };
 

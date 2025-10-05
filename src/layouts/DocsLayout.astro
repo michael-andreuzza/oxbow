@@ -139,7 +139,7 @@ const nextNav = next
 ---
 
 <BaseLayout hideNav={true} hideFooter={true}>
-  <div class="lg:flex min-h-screen bg-white dark:bg-base-900">
+  <div class="lg:flex min-h-screen bg-white dark:bg-base-950">
     <!-- Mobile overlay -->
     <div
       class="hidden fixed inset-0 z-40 bg-base-900/40 backdrop-blur-sm lg:hidden"
@@ -148,7 +148,7 @@ const nextNav = next
     </div>
     <!-- Sidebar -->
     <aside
-      class="hidden lg:flex fixed inset-y-0 left-0 z-50 w-62 -translate-x-full flex-col gap-6 overflow-y-auto bg-white px-5 py- transition-transform duration-200 dark:bg-base-900 lg:translate-x-0 scrollbar-hide py-4"
+      class="hidden lg:flex fixed inset-y-0 left-0 z-50 w-62 -translate-x-full flex-col lg:border-r lg:border-base-200 dark:lg:border-base-800 gap-6 overflow-y-auto bg-white px-5 py- transition-transform duration-200 dark:bg-base-950 lg:translate-x-0 scrollbar-hide py-4"
       data-docs-sidebar
     >
       <header class="gap-2">
@@ -278,7 +278,9 @@ const nextNav = next
     <div class="flex min-h-svh flex-1 flex-col lg:ml-62">
       <DesktopTopBar />
       <div class="flex-1 px-8 lg:px-12 grow max-w-7xl mx-auto w-full">
-        <div class="flex flex-col lg:flex-row lg:items-start">
+        <div
+          class="flex flex-col lg:flex-row lg:items-start lg:divide-x lg:divide-base-200 dark:lg:divide-base-800"
+        >
           <article class="flex-1 space-y-10 lg:pr-12 py-8">
             <div class="grow">
               <div
@@ -355,7 +357,7 @@ const nextNav = next
                     x-cloak
                     x-show="open"
                     x-transition.origin-top-right
-                    class="absolute right-0 z-20 mt-2 w-60 rounded-md border border-base-200 bg-white p-2 shadow-lg focus:outline-none dark:border-base-700 dark:bg-base-800"
+                    class="absolute right-0 z-20 mt-2 w-60 outline outline-base-200 bg-white p-2 shadow-lg focus:outline-none dark:outline-base-800 dark:bg-base-950"
                     role="menu"
                     aria-labelledby="docs-tools-toggle"
                     x-on:keydown.escape.stop="open = false; if ($refs.docsToolsToggle) { $refs.docsToolsToggle.focus(); }"
@@ -363,56 +365,40 @@ const nextNav = next
                     <div class="flex flex-col">
                       <button
                         id="copy-markdown"
-                        class="text-base-900 dark:text-white hover:text-accent-600 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
+                        class="text-base-900 dark:text-white hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
                         role="menuitem"
                         x-ref="docsToolsFirst"
                         x-on:click="open = false"
                       >
-                        <Markdown
-                          slot="icon"
-                          size="sm"
-                          class="text-base-900 dark:text-white"
-                        />
+                        <Markdown slot="icon" size="sm" />
                         Copy page Markdown for LLMs
                       </button>
                       <button
                         id="ask-chatgpt"
-                        class="text-base-900 dark:text-white hover:text-accent-600 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
+                        class="text-base-900 dark:text-white hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
                         role="menuitem"
                         x-on:click="open = false"
                       >
-                        <Gpt
-                          slot="icon"
-                          size="sm"
-                          class="text-base-900 dark:text-white"
-                        />
+                        <Gpt slot="icon" size="sm" />
                         Ask ChatGPT
                       </button>
                       <button
                         id="ask-claude"
-                        class="text-base-900 dark:text-white hover:text-accent-600 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
+                        class="text-base-900 dark:text-white hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
                         role="menuitem"
                         x-on:click="open = false"
                       >
-                        <Claude
-                          slot="icon"
-                          size="sm"
-                          class="text-base-900 dark:text-white"
-                        />
+                        <Claude slot="icon" size="sm" />
                         Ask Claude
                       </button>
                       <a
                         href="#_"
-                        class="text-base-900 dark:text-white hover:text-accent-600 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
+                        class="text-base-900 dark:text-white hover:text-accent-500 flex items-center w-full gap-2 rounded-md px-2 py-1.5 text-xs text-left"
                         role="menuitem"
                         x-ref="docsToolsLast"
                         x-on:click="open = false"
                       >
-                        <GithubBrand
-                          slot="icon"
-                          size="sm"
-                          class="text-base-900 dark:text-white"
-                        />
+                        <GithubBrand slot="icon" size="sm" />
                         Edit on GitHub
                       </a>
                     </div>

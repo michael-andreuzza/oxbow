@@ -43,6 +43,9 @@ const {
   hideFooter = false,
 }: HeadOverrides & { hideNav?: boolean; hideFooter?: boolean } = (Astro.props ??
   {}) as any;
+
+// Check if we're on a documentation page
+const isDocsPage = Astro.url.pathname.startsWith("/documentation");
 ---
 
 <html lang="en" class="scroll-smooth">
@@ -60,7 +63,9 @@ const {
   </head>
   <body class="bg-white dark:bg-base-950 min-h-screen flex flex-col">
     {!hideNav && <Navigation />}
-    <main class="grow w-full mx-auto py-26 lg:py-23">
+    <main
+      class:list={["grow w-full mx-auto", { "py-26 lg:py-23": !isDocsPage }]}
+    >
       <slot />
     </main>
     {!hideFooter && <Footer isSignedIn={!!uid} />}

@@ -1,14 +1,46 @@
 ---
+// Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import MainHero from "@/components/fundations/containers/MainHero.astro";
+import Text from "@/components/fundations/typography/Text.astro";
+import Button from "@/components/fundations/buttons/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 ---
 
 <BaseLayout>
-  <MainHero
-    is404={true}
-    title="Page not found"
-    subtitle="Sorry, we couldn't find the page you were looking for. In the meantime, you may want to return to the homepage or browse all components"
-    showButton={false}
-    showAlpineTailwind={false}
-  />
+  <section>
+    <Wrapper
+      variant="standard"
+      class="relative py-32 overflow-hidden lg:py-55 border-b"
+    >
+      <div
+        class="absolute inset-0 mt-auto -mx-px border-t border-base-200 dark:border-base-800 pointer-events-none bg-light-vertical-stripes h-1/5"
+      >
+      </div>
+      <div class="relative text-center text-balance">
+        <Text
+          tag="h1"
+          variant="displayMD"
+          class="tracking-tight text-base-900 dark:text-white font-display font-medium"
+        >
+          Well, this is awkward.
+        </Text>
+        <Text
+          tag="p"
+          variant="textBase"
+          class="max-w-xl mx-auto mt-4 text-base-600 dark:text-base-400"
+        >
+          The page you’re looking for either vanished, never existed, or decided
+          it was too cool to show up. We respect the hustle.
+        </Text>
+      </div>
+      <div
+        class="relative flex flex-wrap items-center justify-center w-full mt-10 gap-2"
+      >
+        <Button isLink={true} size="xs" variant="oxbowDefault" href="/"
+          >Looking for blocks?</Button
+        >
+      
+      </div>
+    </Wrapper>
+  </section>
 </BaseLayout>

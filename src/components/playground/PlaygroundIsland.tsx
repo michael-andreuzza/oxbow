@@ -13,7 +13,9 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
-
+  Sun,
+  Moon,
+  Laptop,
 } from "lucide-react";
 type Mode = "light" | "system" | "dark";
 type Tab = "preview" | "code";
@@ -332,108 +334,120 @@ export default function PlaygroundIsland({
     <div className="relative">
   <div className="flex items-center justify-between gap-4 pb-2 ">
         {/* Left: index + tools */}
-        <div className="flex items-center gap-1 ">
+        <div className="flex items-center gap-4 ">
           <button
             type="button"
             onClick={copyUrl}
-            className={`flex items-center justify-center size-7 px-2 text-xs transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${copiedUrl ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+            className={`flex items-center justify-center px-1.5 text-xs transition-colors ${copiedUrl ? "text-accent-600 dark:text-accent-400" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
             title="Copy block URL"
             aria-label="Copy block URL"
           >
             {copiedUrl ? <Check size={14} /> : iframeId.replace("iframe-", "")}
           </button>
-          <div className="w-px h-4 bg-base-300 dark:bg-base-900 hidden md:flex"></div>
-                    <span className="items-center hidden gap-1 md:flex">
+          <div className="w-px h-4 bg-base-300 dark:bg-base-700 hidden md:flex"></div>
+          <span className="items-center hidden gap-3 md:flex">
             <button
               onClick={() => setViewportWidth("mobile")}
-              className={`flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${viewport === "mobile" ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+              className={`flex items-center justify-center transition-colors ${viewport === "mobile" ? "text-base-900 dark:text-white" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
+              title="Mobile view"
             >
-              <Smartphone size={14} />
+              <Smartphone size={16} />
             </button>
             <button
               onClick={() => setViewportWidth("tablet")}
-              className={`flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${viewport === "tablet" ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+              className={`flex items-center justify-center transition-colors ${viewport === "tablet" ? "text-base-900 dark:text-white" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
+              title="Tablet view"
             >
-              <Tablet size={14} />
+              <Tablet size={16} />
             </button>
             <button
               onClick={() => setViewportWidth("desktop")}
-              className={`flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${viewport === "desktop" ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+              className={`flex items-center justify-center transition-colors ${viewport === "desktop" ? "text-base-900 dark:text-white" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
+              title="Desktop view"
             >
-              <Monitor size={14} />
+              <Monitor size={16} />
             </button>
           </span>
-           <div className="w-px h-4 bg-base-300 dark:bg-base-900 hidden md:flex"></div>
-          <span className="items-center hidden gap-1 isolate md:flex">
+          <div className="w-px h-4 bg-base-300 dark:bg-base-700 hidden md:flex"></div>
+          <span className="items-center hidden gap-3 md:flex">
             <button
               onClick={() => setMode("light")}
-              className={`flex items-center gap-1.5 h-7 px-2 text-xs transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${mode === "light" ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+              className={`flex items-center justify-center transition-colors ${mode === "light" ? "text-base-900 dark:text-white" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
+              title="Light mode"
             >
-               <span>Light</span>
+              <Sun size={16} />
             </button>
             <button
               onClick={() => setMode("system")}
-              className={`flex items-center gap-1.5 h-7 px-2 text-xs transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${mode === "system" ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+              className={`flex items-center justify-center transition-colors ${mode === "system" ? "text-base-900 dark:text-white" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
+              title="System mode"
             >
-               <span>System</span>
+              <Laptop size={16} />
             </button>
             <button
               onClick={() => setMode("dark")}
-              className={`flex items-center gap-1.5 h-7 px-2 text-xs transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${mode === "dark" ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+              className={`flex items-center justify-center transition-colors ${mode === "dark" ? "text-base-900 dark:text-white" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
+              title="Dark mode"
             >
-               <span>Dark</span>
+              <Moon size={16} />
             </button>
           </span>
-           <div className="w-px h-4 bg-base-300 dark:bg-base-900 hidden md:flex"></div>
+          <div className="w-px h-4 bg-base-300 dark:bg-base-700 hidden md:flex"></div>
           {/* Code controls next to theme toggles */}
-          <div className="items-center hidden gap-1 md:flex">
+          <div className="items-center hidden gap-2 md:flex">
             <button
               onClick={() => setTab("preview")}
-              className={`flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${tab === "preview" ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+              className={`flex items-center justify-center transition-colors ${tab === "preview" ? "text-base-900 dark:text-white" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
+              title="Preview"
             >
-              <Eye size={14} />
+              <Eye size={16} />
             </button>
             <button
               onClick={() => setTab("code")}
-              className={`flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 ${tab === "code" ? "bg-base-900 text-white dark:bg-white dark:text-base-900" : "bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"}`}
+              className={`flex items-center justify-center transition-colors ${tab === "code" ? "text-base-900 dark:text-white" : "text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"}`}
+              title="Code"
             >
-              <Code size={14} />
+              <Code size={16} />
             </button>
+            </div>
+          <div className="w-px h-4 bg-base-300 dark:bg-base-700 hidden md:flex"></div>
+
+          <div className="items-center hidden gap-3 md:flex">
             <button
               onClick={copyCode}
-              className="flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"
+              className="flex items-center justify-center transition-colors text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"
               title="Copy"
               aria-label="Copy"
             >
-              {copiedCode ? <Check size={14} /> : <Copy size={14} />}
+              {copiedCode ? <Check size={16} /> : <Copy size={16} />}
             </button>
             <button
               onClick={downloadCode}
-              className="flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"
+              className="flex items-center justify-center transition-colors text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"
               title="Download code"
               aria-label="Download code"
             >
-              <Download size={14} />
+              <Download size={16} />
             </button>
             <button
               onClick={openInNewWindow}
-              className="flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"
+              className="flex items-center justify-center transition-colors text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"
               title="Open in new window"
               aria-label="Open in new window"
             >
-              <ExternalLink size={14} />
+              <ExternalLink size={16} />
             </button>
           </div>
         </div>
         {/* Right: code controls + nav (if provided) */}
-        <div className="items-center justify-end hidden gap-1 md:flex ">
+        <div className="items-center justify-end hidden gap-3 md:flex ">
           {arguments[0]?.subsByCat && (
             <>
               {/* Category */}
               <div className="relative">
                 <button
                   onClick={(e) => openNavMenu("cat", e)}
-                  className="flex items-center gap-1.5 h-7 px-2 text-xs transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white px-3"
+                  className="flex items-center gap-2 text-xs transition-colors text-base-900 dark:text-white"
                 >
                   <span className="capitalize">
                     {fmt(arguments[0]!.navCat || "")}
@@ -445,7 +459,7 @@ export default function PlaygroundIsland({
               <div className="relative">
                 <button
                   onClick={(e) => openNavMenu("sub", e)}
-                  className="hidden md:flex items-center gap-1.5 h-7 px-2 text-xs transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white px-3"
+                  className="hidden md:flex items-center gap-2 text-xs transition-colors text-base-900 dark:text-white"
                 >
                   <span className="capitalize">
                     {fmt(arguments[0]!.navSub || "")}
@@ -457,29 +471,31 @@ export default function PlaygroundIsland({
               <div className="relative">
                 <button
                   onClick={(e) => openNavMenu("idx", e)}
-                  className="hidden md:flex items-center gap-1.5 h-7 px-2 text-xs transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white px-3"
+                  className="hidden md:flex items-center gap-2  text-xs transition-colors text-base-900 hover:text-accent-600 dark:text-white dark:hover:text-accent-400"
                 >
-                  <span>NO</span>
-                  
-                  <span>
-                    {clamp(
-                      arguments[0]!.navIdx || 1,
-                      1,
-                      count(
-                        arguments[0]!.navCat || "",
-                        arguments[0]!.navSub || "",
-                      ),
-                    )}
-                  </span>
+                 <div>
+                    <span>#</span>
+                    
+                    <span>
+                      {clamp(
+                        arguments[0]!.navIdx || 1,
+                        1,
+                        count(
+                          arguments[0]!.navCat || "",
+                          arguments[0]!.navSub || "",
+                        ),
+                      )}
+                    </span>
+                 </div>
                   <ChevronDown className="size-4" />
                 </button>
               </div>
-           <div className="w-px h-4 bg-base-300 dark:bg-base-900 hidden md:flex"></div>
+           <div className="w-px h-4 bg-base-300 dark:bg-base-700 hidden md:flex"></div>
 
               {navOpen === "cat" && (
                 <div
                   ref={navMenuRef}
-                  className="fixed z-50 w-56 mt-2 text-xs transition-colors bg-white shadow rounded-xl outline outline-base-100 text-base-600 divide-y divide-base-100 dark:bg-base-900 dark:text-base-300 dark:outline-base-700 dark:divide-base-700"
+                  className="fixed z-50 w-56 mt-2 text-xs transition-colors bg-white shadow  outline outline-base-100 text-base-600 divide-y divide-base-100 dark:bg-base-950 dark:text-base-300 dark:outline-base-800 dark:divide-base-800"
                   style={{ top: navPos.top, left: navPos.left }}
                 >
                   <div className="py-2 overflow-hidden max-h-64">
@@ -509,7 +525,7 @@ export default function PlaygroundIsland({
               {navOpen === "sub" && (
                 <div
                   ref={navMenuRef}
-                  className="fixed z-50 w-64 mt-2 text-xs transition-colors bg-white shadow rounded-xl outline outline-base-100 text-base-600 divide-y divide-base-100 dark:bg-base-900 dark:text-base-300 dark:outline-base-700 dark:divide-base-700"
+                  className="fixed z-50 w-64 mt-2 text-xs transition-colors bg-white shadow-lg outline outline-base-100 text-base-600 divide-y divide-base-100 dark:bg-base-950 dark:text-base-300 dark:outline-base-800 dark:divide-base-800"
                   style={{ top: navPos.top, left: navPos.left }}
                 >
                   <div className="py-2 overflow-auto max-h-64">
@@ -533,10 +549,10 @@ export default function PlaygroundIsland({
               {navOpen === "idx" && (
                 <div
                   ref={navMenuRef}
-                  className="fixed z-50 w-40 mt-2 text-xs transition-colors bg-white shadow rounded-xl outline outline-base-100 text-base-600 dark:bg-base-900 dark:text-base-300 dark:outline-base-700"
+                  className="fixed z-50 w-40 mt-2 text-xs transition-colors bg-white shadow-lg outline outline-base-100 text-base-600 dark:bg-base-900 dark:text-base-300 dark:outline-base-700"
                   style={{ top: navPos.top, left: navPos.left }}
                 >
-                  <div className="grid grid-cols-4 gap-1 px-2 py-2 overflow-auto max-h-64">
+                  <div className="grid grid-cols-4 gap-2 px-2 py-2 overflow-auto max-h-64">
                     {Array.from(
                       {
                         length: count(
@@ -562,13 +578,13 @@ export default function PlaygroundIsland({
                 <a
                   href={arguments[0]!.prevHref}
                   aria-label="Previous"
-                  className="flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"
+                  className="flex items-center justify-center transition-colors text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"
                 >
-                  <ChevronLeft className="size-4" />
+                  <ChevronLeft size={16} />
                 </a>
               ) : (
-                <div className="flex items-center justify-center size-7 opacity-50 rounded-md bg-base-50 text-base-400 dark:bg-base-900 dark:text-base-600">
-                  <ChevronLeft className="size-4" />
+                <div className="flex items-center justify-center opacity-30 text-base-400 dark:text-base-600">
+                  <ChevronLeft size={16} />
                 </div>
               )}
               
@@ -576,20 +592,20 @@ export default function PlaygroundIsland({
                 <a
                   href={arguments[0]!.nextHref}
                   aria-label="Next"
-                  className="flex items-center justify-center size-7 transition-colors rounded-md shadow-oxbow dark:shadow-base-900/50 bg-white text-base-600  hover:text-base-950 dark:bg-base-800 dark:text-base-400  dark:hover:text-white"
+                  className="flex items-center justify-center transition-colors text-base-600 hover:text-base-900 dark:text-base-400 dark:hover:text-white"
                 >
-                  <ChevronRight className="size-4" />
+                  <ChevronRight size={16} />
                 </a>
               ) : (
-                <div className="flex items-center justify-center size-7 opacity-50 rounded-md bg-base-50 text-base-400 dark:bg-base-900 dark:text-base-600">
-                  <ChevronRight className="size-4" />
+                <div className="flex items-center justify-center opacity-30 text-base-400 dark:text-base-600">
+                  <ChevronRight size={16} />
                 </div>
               )}
             </>
           )}
         </div>
       </div>
-      <div className="relative flex w-full min-h-0 overflow-hidden outline outline-base-200 dark:outline-base-800 rounded-xl shadow-oxbow dark:shadow-base-900/50 z-1 isolate scrollbar-hide bg-white dark:bg-base-950/60">
+      <div className="relative flex w-full min-h-0 overflow-hidden outline outline-base-200 dark:outline-base-800 rounded-xl shadow-oxbow dark:shadow-base-900/50 z-1 isolate scrollbar-hide bg-white dark:bg-base-950/60 mt-4">
         <PlaygroundShortcutsButton />
         {tab === "preview" && (
           <div className="flex flex-col items-center w-full bg-white scrollbar-hide dark:bg-base-950/60">

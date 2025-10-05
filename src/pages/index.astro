@@ -12,7 +12,7 @@ import ComponentsShowcase from "@/components/landing/ComponentsShowcase.astro";
 
 <BaseLayout>
   <section class="relative">
-    <Wrapper variant="standard" class="pt-32 pb-12 relative">
+    <Wrapper variant="standard" class="pt-32 lg:pt-12 pb-12 relative">
       <!-- Top Right Plus 
       <Cross class="-top-[0.6rem] -right-[0.65rem] z-51" />
        -->
@@ -23,14 +23,9 @@ import ComponentsShowcase from "@/components/landing/ComponentsShowcase.astro";
         variant="light"
         aria-hidden="true"
         direction="horizontal"
-        class="absolute hidden md:block inset-0 w-[25%] -mx-px h-[50%] top-0 ml-auto dark:hidden -mt-1"
+        class="absolute hidden md:block inset-0 w-[25%] -mx-px h-[50%] top-0 ml-auto -mt-1"
       />
-      <StripesBG
-        variant="base"
-        aria-hidden="true"
-        direction="horizontal"
-        class="absolute inset-0 w-[25%] -mx-px h-[50%] top-0 ml-auto hidden dark:md:block -mt-1"
-      />
+
       <StripesBG
         variant="accent"
         aria-hidden="true"
@@ -43,7 +38,7 @@ import ComponentsShowcase from "@/components/landing/ComponentsShowcase.astro";
         <Text
           tag="h1"
           variant="displayMD"
-          class="font-medium tracking-tight text-base-600 dark:text-white mt-12"
+          class="font-semibold tracking-tight text-base-900 dark:text-white mt-12 font-display"
         >
           Oxbow UI is Open Source.
         </Text>
