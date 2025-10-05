@@ -7,6 +7,7 @@ interface Props {
     | "nav"
     | "footer"
     | "paddinglessDesktop"
+    | "paddingless"
     | "narrow"; // Define any variants you need
   class?: string; // Optional prop for additional classes
 }
@@ -74,9 +75,10 @@ const variantClasses = {
   footer: "mx-auto px-8 w-full max-w-6xl lg:px-0",
   paddinglessDesktop:
     "mx-auto max-w-6xl px-4 xl:px-0  overflow-hidden xl:overflow-visible",
+  paddingless: "mx-auto max-w-6xl   overflow-hidden xl:overflow-visible",
   standard:
     "mx-auto px-8 w-full max-w-6xl xl:border-x border-base-200 dark:border-base-800",
-  nav: "mx-auto px-8 py-8 xl:px-0 w-full max-w-6xl border-b border-base-200 dark:border-base-800",
+  nav: "mx-auto px-8 py-4 lg:py-8 xl:px-0 w-full max-w-6xl border-b border-base-200 dark:border-base-800",
 };
 // Combine the classes for the specified variant with any extra classes
 const classes = `${variantClasses[variant]} ${extraClass}`.trim();

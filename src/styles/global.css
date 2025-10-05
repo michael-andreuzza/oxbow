@@ -25,6 +25,19 @@
   --color-accent-800: oklch(27.39% 0.129 290.51);
   --color-accent-900: oklch(18.44% 0.075 292.49);
   --color-accent-950: oklch(13.92% 0.049 298.54);
+  /* Secondary (Pink/Coral) */
+  --color-secondary-50: oklch(96% 0.02 15);
+  --color-secondary-100: oklch(93% 0.04 15);
+  --color-secondary-200: oklch(88% 0.08 15);
+  --color-secondary-300: oklch(83% 0.12 15);
+  --color-secondary-400: oklch(78% 0.16 15);
+  --color-secondary-500: oklch(73% 0.18 15);
+  --color-secondary-600: oklch(65% 0.16 15);
+  --color-secondary-700: oklch(55% 0.14 15);
+  --color-secondary-800: oklch(45% 0.12 15);
+  --color-secondary-900: oklch(35% 0.09 15);
+  --color-secondary-950: oklch(25% 0.06 15);
+  /* Base colors */
   --color-base-50: oklch(0.985 0 0);
   --color-base-100: oklch(0.97 0 0);
   --color-base-200: oklch(0.922 0 0);
@@ -37,68 +50,7 @@
   --color-base-900: oklch(0.205 0 0);
   --color-base-950: oklch(0.145 0 0);
 
- /* Gradients stripes vertical */
-  --background-image-base-vertical-stripes: 
-  repeating-linear-gradient(
-    to right,
-    oklch(0.269 0 0) 0px,
-    oklch(0.269 0 0) 1px,
-    transparent 1px,
-    transparent 8px
-  );
- 
-  --background-image-accent-vertical-stripes: 
-  repeating-linear-gradient(
-    to right,
-    oklch(50.89% 0.233 290.96) 0px,
-    oklch(50.89% 0.233 290.96) 1px,
-    transparent 1px,
-    transparent 8px
-  );
-  --background-image-light-vertical-stripes: 
-  repeating-linear-gradient(
-    to right,
-    oklch(0.92 0 0) 0px,
-    oklch(0.92 0 0) 1px,
-    transparent 1px,
-    transparent 8px
-  );
-  /* Gradients stripes horizontal */
---background-image-base-horizontal-stripes: 
-  repeating-linear-gradient(
-    to bottom,
-    oklch(0.269 0 0) 0px,
-    oklch(0.269 0 0) 1px,
-    transparent 1px,
-    transparent 8px
-  );
-
---background-image-pink-horizontal-stripes: 
-  repeating-linear-gradient(
-    to bottom,
-    hsla(5, 84%, 78%, 1) 0px,
-    hsla(5, 84%, 78%, 1) 1px,
-    transparent 1px,
-    transparent 8px
-  );
-
---background-image-accent-horizontal-stripes: 
-  repeating-linear-gradient(
-    to bottom,
-    oklch(50.89% 0.233 290.96) 0px,
-    oklch(50.89% 0.233 290.96) 1px,
-    transparent 1px,
-    transparent 8px
-  );
-
---background-image-light-horizontal-stripes: 
-  repeating-linear-gradient(
-    to bottom,
-    oklch(0.92 0 0) 0px,
-    oklch(0.92 0 0) 1px,
-    transparent 1px,
-    transparent 8px
-  );
+ /
 
 }
 

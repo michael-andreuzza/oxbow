@@ -30,6 +30,7 @@ export const collections = {
     schema: z
       .object({
         title: z.string(),
+        bgColor: z.string().optional(),
         date: z.string().refine((d) => !isNaN(Date.parse(d)), {
           message: "Invalid date format",
         }),

@@ -1,3 +1,71 @@
+
+
+@theme {
+
+    * Gradients stripes vertical */
+  --background-image-base-vertical-stripes: 
+  repeating-linear-gradient(
+    to right,
+    var(--color-base-800) 0px,
+    var(--color-base-800) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+ 
+  --background-image-accent-vertical-stripes: 
+  repeating-linear-gradient(
+    to right,
+    var(--color-accent-500) 0px,
+    var(--color-accent-500) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  --background-image-light-vertical-stripes: 
+  repeating-linear-gradient(
+    to right,
+    var(--color-base-200) 0px,
+    var(--color-base-200) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  /* Gradients stripes horizontal */
+--background-image-base-horizontal-stripes: 
+  repeating-linear-gradient(
+    to bottom,
+    var(--color-base-800) 0px,
+    var(--color-base-800) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+
+--background-image-secondary-horizontal-stripes: 
+  repeating-linear-gradient(
+    to bottom,
+    var(--color-secondary-400) 0px,
+    var(--color-secondary-400) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+
+--background-image-accent-horizontal-stripes: 
+  repeating-linear-gradient(
+    to bottom,
+    var(--color-accent-500) 0px,
+    var(--color-accent-500) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+
+--background-image-light-horizontal-stripes: 
+  repeating-linear-gradient(
+    to bottom,
+    var(--color-base-200) 0px,
+    var(--color-base-200) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+
 /* Complex backgrodund Gradients */
 .bg-meshLightBlue {
     background-color: hsla(161, 77%, 83%, 1);
