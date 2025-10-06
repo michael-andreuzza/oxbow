@@ -13,6 +13,21 @@
   --font-display: "InterDisplay", sans-serif;
   --font-sans: "Inter", sans-serif;
   --font-mono: "Geist Mono", monospace;
+
+  --color-blue-light: #60beff;
+  --color-blue: #1da8ff;
+  --color-blue-dark: #007bff;
+  --color-green-light: #33cd8e;
+  --color-green: #00c172;
+  --color-green-dark: #00a651;
+  --color-yellow-light: #ffcd6c;
+  --color-yellow: #ffb112;
+  --color-yellow-dark: #ffa100;
+  --color-orange: #fa5925;
+  --color-orange-dark: #fd4202;
+  /* Accents */
+  --color-accent: #f85912;
+  --color-accent-dark: #e03e23;
   /* Accents - British Racing Green */
   --color-beige: #f7f7f4;
   --color-beige-dark: #e4e1db;
@@ -39,6 +54,17 @@
   --color-secondary-800: oklch(36% 0.04 240);
   --color-secondary-900: oklch(26% 0.03 240);
   --color-secondary-950: oklch(18% 0.02 240);
+  --color-sand-50: oklch(0.958 0.005 94.95);
+--color-sand-100: oklch(0.913 0.011 89.67);
+--color-sand-200: oklch(0.826 0.01 93.52);
+--color-sand-300: oklch(0.741 0.009 91.45);
+--color-sand-400: oklch(0.656 0.009 98.88);
+--color-sand-500: oklch(0.569 0.008 97.37);
+--color-sand-600: oklch(0.482 0.005 91.42);
+--color-sand-700: oklch(0.397 0.005 106.52);
+--color-sand-800: oklch(0.309 0.004 84.54);
+--color-sand-900: oklch(0.223 0.002 67.71);
+--color-sand-950: oklch(0.223 0.002 67.71);
   /* Base colors */
   --color-base-50: oklch(0.985 0 0);
   --color-base-100: oklch(0.97 0 0);
@@ -68,30 +94,30 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-variant-numeric: tabular-nums;
-  --shiki-token-string-expression: var(--color-charcoal-500);
-  --shiki-token-function: var(--color-charcoal-700);
-  --shiki-foreground: var(--color-charcoal-800);
-  --shiki-color-text: var(--color-charcoal-800);
-  --shiki-color-background: var(--color-charcoal-50);
-  --shiki-token-comment: var(--color-charcoal-400);
-  --shiki-token-string: var(--color-charcoal-600);
-  --shiki-token-constant: var(--color-charcoal-700);
-  --shiki-token-keyword: var(--color-charcoal-800);
-  --shiki-token-parameter: var(--color-charcoal-600);
-  --shiki-token-punctuation: var(--color-charcoal-500);
+  --shiki-foreground: var(--color-base-500);
+  --shiki-color-text: var(--color-base-500);
+  --shiki-color-background: var(--color-base-100);
+  --shiki-token-comment: var(--color-base-400);
+  --shiki-token-string: var(--color-blue-dark);
+  --shiki-token-constant: var(--color-orange);
+  --shiki-token-keyword: var(--color-yellow-dark);
+  --shiki-token-parameter: var(--color-accent-dark);
+  --shiki-token-punctuation: var(--color-orange-dark);
+  --shiki-token-function: var(--color-blue);
+  --shiki-token-string-expression: var(--color-green-dark);
 }
 :root.dark {
-  --shiki-token-string-expression: var(--color-metal-400);
-  --shiki-token-function: var(--color-metal-200);
-  --shiki-foreground: var(--color-metal-100);
-  --shiki-color-text: var(--color-metal-100);
-  --shiki-color-background: var(--color-charcoal-900);
-  --shiki-token-comment: var(--color-charcoal-500);
-  --shiki-token-string: var(--color-metal-300);
-  --shiki-token-constant: var(--color-metal-200);
-  --shiki-token-keyword: var(--color-metal-200);
-  --shiki-token-parameter: var(--color-metal-300);
-  --shiki-token-punctuation: var(--color-metal-400);
+  --shiki-foreground: var(--color-base-50);
+  --shiki-color-text: var(--color-base-50);
+  --shiki-color-background: var(--color-base-900);
+  --shiki-token-comment: var(--color-base-500);
+  --shiki-token-string: var(--color-blue-light);
+  --shiki-token-constant: var(--color-orange);
+  --shiki-token-keyword: var(--color-yellow-light);
+  --shiki-token-parameter: var(--color-accent);
+  --shiki-token-punctuation: var(--color-orange);
+  --shiki-token-function: var(--color-blue);
+  --shiki-token-string-expression: var(--color-green);
 }
 /* Ensure a stable vertical scrollbar to avoid layout shift */
 html { overflow-y: auto; scrollbar-gutter: stable; }

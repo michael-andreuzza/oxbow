@@ -605,7 +605,7 @@ export default function PlaygroundIsland({
           )}
         </div>
       </div>
-      <div className="relative flex w-full min-h-0 overflow-hidden outline outline-base-200 dark:outline-base-800  shadow-oxbow dark:shadow-base-900/50 z-1 isolate scrollbar-hide bg-beige dark:bg-base-950/60 mt-4">
+      <div className="relative flex w-full min-h-0 overflow-hidden outline outline-base-200 dark:outline-base-800  shadow-oxbow dark:shadow-base-900/50 z-1 isolate scrollbar-hide bg-beige dark:bg-base-950/60 mt-4 scrollbar-hide">
         <PlaygroundShortcutsButton />
         {tab === "preview" && (
           <div className="flex flex-col items-center w-full bg-beige scrollbar-hide dark:bg-base-950/60">
@@ -636,7 +636,7 @@ export default function PlaygroundIsland({
           </div>
         )}
         {tab === "code" && (
-          <div className="flex-grow  text-xs transition-colors bg-white code-pane size-full selection:bg-zinc-100 scrollbar-hide dark:bg-base-900 dark:text-base-200 dark:selection:bg-base-800/60">
+          <div className="flex-grow  text-xs transition-colors bg-sand-50  code-pane size-full selection:bg-zinc-100 scrollbar-hide dark:bg-base-900 dark:text-base-200 dark:selection:bg-base-800/60">
             {mode === "system" && !!arguments[0]?.highlightedSystem ? (
               <div
                 className="overflow-x-auto scrollbar-hide"

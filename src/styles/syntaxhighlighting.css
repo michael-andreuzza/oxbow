@@ -71,110 +71,94 @@ code .line::before {
 }
 
 
-/* Your existing color variables */
+/* Code color variables */
 :root {
-  /* Enhanced Shiki code styles with improved contrast and modern colors */
-  --astro-code-color-text: var(--color-charcoal-800);
-  --astro-code-background: var(--color-base-50);
-  --astro-code-token-punctuation: var(--color-charcoal-500);
-  --astro-code-token-parameter: var(--color-charcoal-600);
-  --astro-code-token-line-number: var(--color-charcoal-300);
-  --astro-code-token-comment: var(--color-charcoal-400);
-  --astro-code-token-cdata: var(--color-charcoal-700);
-  /* Functions and methods */
-  --astro-code-token-constant: var(--color-charcoal-700);
-  --astro-code-token-function: var(--color-charcoal-800);
-  --astro-code-token-builtin: var(--color-charcoal-700);
-  --astro-code-token-class-name: var(--color-charcoal-800);
-  --astro-code-token-property: var(--color-charcoal-700);
-  --astro-code-token-selector: var(--color-charcoal-700);
-  /* Attributes and HTML */
-  --astro-code-token-attr-name: var(--color-charcoal-700);
-  --astro-code-token-attr-value: var(--color-charcoal-600);
-  --astro-code-token-tag: var(--color-charcoal-800);
-  /* Strings */
-  --astro-code-token-string: var(--color-charcoal-600);
-  --astro-code-token-string-expression: var(--color-charcoal-500);
-  /* Variables and identifiers */
-  --astro-code-token-variable: var(--color-charcoal-600);
-  --astro-code-token-namespace: var(--color-charcoal-700);
-  /* Keywords and operators */
-  --astro-code-token-keyword: var(--color-charcoal-800);
-  --astro-code-token-operator: var(--color-charcoal-700);
-  --astro-code-token-symbol: var(--color-charcoal-700);
-  /* Numbers and booleans */
-  --astro-code-token-number: var(--color-charcoal-600);
-  --astro-code-token-boolean: var(--color-charcoal-600);
-  /* Special tokens */
-  --astro-code-token-deleted: var(--color-charcoal-500);
-  --astro-code-token-inserted: var(--color-charcoal-600);
-  --astro-code-token-changed: var(--color-charcoal-500);
-  --astro-code-token-important: var(--color-charcoal-800);
-  --astro-code-token-highlight: var(--color-charcoal-300);
-  --astro-code-token-alert: var(--color-charcoal-600);
-  --astro-code-token-emphasis: var(--color-charcoal-600);
-  --astro-code-token-focus: var(--color-charcoal-700);
-  --astro-code-token-notice: var(--color-charcoal-600);
-  /* CSS specific */
-  --astro-code-token-atrule: var(--color-charcoal-700);
-  --astro-code-token-entity: var(--color-charcoal-700);
-  --astro-code-token-regex: var(--color-charcoal-600);
-  /* Meta tokens */
-  --astro-code-token-doctype: var(--color-charcoal-500);
-  --astro-code-token-prolog: var(--color-charcoal-400);
-  /* Text formatting */
+  --astro-code-color-text: var(--color-base-500);
+  --astro-code-token-link: var(--color-accent-dark);
+  --astro-code-token-comment: var(--color-base-400);
+  --astro-code-token-string: var(--color-blue-dark);
+  --astro-code-token-constant: var(--color-orange);
+  --astro-code-background: var(--color-sand-50);
+  --astro-code-token-keyword: var(--color-yellow-dark);
+  --astro-code-token-function: var(--color-blue);
+  --astro-code-token-parameter: var(--color-accent-dark);
+  --astro-code-token-punctuation: var(--color-orange-dark);
+  --astro-code-token-string-expression: var(--color-green-dark);
   --astro-code-token-bold: inherit;
   --astro-code-token-italic: italic;
   --astro-code-token-underline: underline;
+  --astro-code-token-line-number: var(--color-base-300);
+  --astro-code-token-cdata: var(--color-blue);
+  --astro-code-token-builtin: var(--color-orange);
+  --astro-code-token-class-name: var(--color-blue-dark);
+  --astro-code-token-property: var(--color-accent-dark);
+  --astro-code-token-selector: var(--color-accent-dark);
+  --astro-code-token-attr-name: var(--color-yellow-dark);
+  --astro-code-token-attr-value: var(--color-blue);
+  --astro-code-token-tag: var(--color-accent-dark);
+  --astro-code-token-variable: var(--color-blue);
+  --astro-code-token-namespace: var(--color-blue-dark);
+  --astro-code-token-operator: var(--color-orange-dark);
+  --astro-code-token-symbol: var(--color-orange);
+  --astro-code-token-number: var(--color-orange);
+  --astro-code-token-boolean: var(--color-orange);
+  --astro-code-token-deleted: var(--color-accent);
+  --astro-code-token-inserted: var(--color-green-dark);
+  --astro-code-token-changed: var(--color-orange);
+  --astro-code-token-important: var(--color-yellow-dark);
+  --astro-code-token-highlight: var(--color-base-200);
+  --astro-code-token-alert: var(--color-yellow);
+  --astro-code-token-emphasis: var(--color-blue-dark);
+  --astro-code-token-focus: var(--color-accent-dark);
+  --astro-code-token-notice: var(--color-blue);
+  --astro-code-token-atrule: var(--color-blue-dark);
+  --astro-code-token-entity: var(--color-accent-dark);
+  --astro-code-token-regex: var(--color-green);
+  --astro-code-token-doctype: var(--color-base-300);
+  --astro-code-token-prolog: var(--color-base-300);
 }
-/* Enhanced dark mode with better contrast and modern colors */
 :root.dark {
-  --astro-code-color-text: var(--color-metal-100);
-  --astro-code-background: var(--color-base-800);
-  --astro-code-token-punctuation: var(--color-metal-300);
-  --astro-code-token-parameter: var(--color-metal-200);
-  --astro-code-token-line-number: var(--color-metal-400);
-  --astro-code-token-comment: var(--color-charcoal-500);
-  --astro-code-token-cdata: var(--color-metal-200);
-  /* Functions and methods */
-  --astro-code-token-constant: var(--color-metal-200);
-  --astro-code-token-function: var(--color-metal-200);
-  --astro-code-token-builtin: var(--color-metal-200);
-  --astro-code-token-class-name: var(--color-metal-200);
-  --astro-code-token-property: var(--color-metal-200);
-  --astro-code-token-selector: var(--color-metal-200);
-  /* Attributes and HTML */
-  --astro-code-token-attr-name: var(--color-metal-200);
-  --astro-code-token-attr-value: var(--color-metal-300);
-  --astro-code-token-tag: var(--color-metal-200);
-  /* Strings */
-  --astro-code-token-string: var(--color-metal-300);
-  --astro-code-token-string-expression: var(--color-metal-400);
-  /* Variables and identifiers */
-  --astro-code-token-variable: var(--color-metal-300);
-  --astro-code-token-namespace: var(--color-metal-200);
-  /* Keywords and operators */
-  --astro-code-token-keyword: var(--color-metal-200);
-  --astro-code-token-operator: var(--color-metal-200);
-  --astro-code-token-symbol: var(--color-metal-200);
-  /* Numbers and booleans */
-  --astro-code-token-number: var(--color-metal-300);
-  --astro-code-token-boolean: var(--color-metal-300);
-  /* Special tokens */
-  --astro-code-token-deleted: var(--color-metal-400);
-  --astro-code-token-inserted: var(--color-metal-300);
-  --astro-code-token-changed: var(--color-metal-400);
-  --astro-code-token-important: var(--color-metal-200);
-  --astro-code-token-highlight: var(--color-metal-400);
-  --astro-code-token-alert: var(--color-metal-300);
-  --astro-code-token-emphasis: var(--color-metal-300);
-  --astro-code-token-focus: var(--color-metal-200);
-  --astro-code-token-notice: var(--color-metal-300);
-  /* CSS specific */
-  --astro-code-token-atrule: var(--color-metal-300);
-  --astro-code-token-entity: var(--color-metal-300);
-  --astro-code-token-regex: var(--color-metal-300);
-  /* Meta tokens */
-  --astro-code-token-doctype: var(--color-metal-400);
-  --astro-code-token-prolog: var(--color-metal-500);
+  --astro-code-color-text: var(--color-base-50);
+  --astro-code-token-link: var(--color-accent);
+  --astro-code-token-comment: var(--color-base-500);
+  --astro-code-token-string: var(--color-blue-light);
+  --astro-code-token-constant: var(--color-orange);
+  --astro-code-background: var(--color-base-900);
+  --astro-code-token-keyword: var(--color-yellow-light);
+  --astro-code-token-function: var(--color-blue);
+  --astro-code-token-parameter: var(--color-accent);
+  --astro-code-token-punctuation: var(--color-orange);
+  --astro-code-token-string-expression: var(--color-green);
+  --astro-code-token-bold: inherit;
+  --astro-code-token-italic: italic;
+  --astro-code-token-underline: underline;
+  --astro-code-token-line-number: var(--color-base-500);
+  --astro-code-token-cdata: var(--color-blue-light);
+  --astro-code-token-builtin: var(--color-orange);
+  --astro-code-token-class-name: var(--color-blue-light);
+  --astro-code-token-property: var(--color-accent);
+  --astro-code-token-selector: var(--color-accent);
+  --astro-code-token-attr-name: var(--color-yellow);
+  --astro-code-token-attr-value: var(--color-blue);
+  --astro-code-token-tag: var(--color-accent);
+  --astro-code-token-variable: var(--color-blue-light);
+  --astro-code-token-namespace: var(--color-blue);
+  --astro-code-token-operator: var(--color-orange-dark);
+  --astro-code-token-symbol: var(--color-orange);
+  --astro-code-token-number: var(--color-orange);
+  --astro-code-token-boolean: var(--color-orange);
+  --astro-code-token-deleted: var(--color-accent-dark);
+  --astro-code-token-inserted: var(--color-green);
+  --astro-code-token-changed: var(--color-orange-dark);
+  --astro-code-token-important: var(--color-yellow);
+  --astro-code-token-highlight: var(--color-base-700);
+  --astro-code-token-alert: var(--color-yellow-dark);
+  --astro-code-token-emphasis: var(--color-blue-light);
+  --astro-code-token-focus: var(--color-accent);
+  --astro-code-token-notice: var(--color-blue-light);
+  --astro-code-token-atrule: var(--color-blue);
+  --astro-code-token-entity: var(--color-accent);
+  --astro-code-token-regex: var(--color-green-light);
+  --astro-code-token-doctype: var(--color-base-600);
+  --astro-code-token-prolog: var(--color-base-600);
 }
