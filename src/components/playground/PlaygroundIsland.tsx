@@ -305,8 +305,9 @@ export default function PlaygroundIsland({
     (s || "").replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   const count = (c: string, s: string) =>
     (arguments[0]?.counts || {})[`${c}/${s}`] || 1;
+  const leftPadZero = (n: number | string) => n.toString().padStart(2, "0");
   const clamp = (n: number, min: number, max: number) =>
-    Math.max(min, Math.min(max, n));
+    leftPadZero(Math.max(min, Math.min(max, n)));
   const openInNewWindow = () => {
     try {
       const url = new URL(iframeSrc, window.location.origin);
@@ -564,7 +565,7 @@ export default function PlaygroundIsland({
                     ).map((n) => (
                       <a
                         key={n}
-                        href={`/playground/${arguments[0]!.navCat}/${arguments[0]!.navSub}/${n}`}
+                        href={`/playground/${arguments[0]!.navCat}/${arguments[0]!.navSub}/${leftPadZero(n)}`}
                         className={`flex items-center justify-center px-2 py-1.5 transition-colors rounded hover:bg-base-100 dark:hover:bg-base-800/60 ${n === clamp(arguments[0]!.navIdx || 1, 1, count(arguments[0]!.navCat || "", arguments[0]!.navSub || "")) ? "text-base-950 font-medium dark:text-white" : "text-base-600 dark:text-base-200"}`}
                       >
                         {n}

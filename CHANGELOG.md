@@ -1,5 +1,11 @@
 # Changelog for Oxbow UI Components
 
+## **2025-10-08**
+
+### Modified
+- bento-grids: [1 component](https://oxbowui.com/playground/marketing/bento-grids)
+- faq: [1 component](https://oxbowui.com/playground/marketing/faq)
+
 ## **2025-09-29**
 
 ### Modified
@@ -706,57 +712,3 @@
 
 ### Modified
 - pricing: [8 components](https://oxbowui.com/playground/marketing/pricing)
-
-## **2025-07-01**
-
-### Modified
-- alerts: [1 component](https://oxbowui.com/playground/application/alerts)
-- avatars: [1 component](https://oxbowui.com/playground/application/avatars)
-- badges: [1 component](https://oxbowui.com/playground/application/badges)
-- banners: [1 component](https://oxbowui.com/playground/application/banners)
-- breadcrumbs: [1 component](https://oxbowui.com/playground/application/breadcrumbs)
-- button-groups: [1 component](https://oxbowui.com/playground/application/button-groups)
-- button-icon: [1 component](https://oxbowui.com/playground/application/button-icon)
-- buttons: [1 component](https://oxbowui.com/playground/application/buttons)
-- checkboxes: [1 component](https://oxbowui.com/playground/application/checkboxes)
-- commandbar: [1 component](https://oxbowui.com/playground/application/commandbar)
-- emptyStates: [1 component](https://oxbowui.com/playground/application/emptyStates)
-- flyouts: [1 component](https://oxbowui.com/playground/application/flyouts)
-- input-groups: [1 component](https://oxbowui.com/playground/application/input-groups)
-- inputs: [1 component](https://oxbowui.com/playground/application/inputs)
-- navbars: [1 component](https://oxbowui.com/playground/application/navbars)
-- notifications: [1 component](https://oxbowui.com/playground/application/notifications)
-- pagination: [1 component](https://oxbowui.com/playground/application/pagination)
-- radiogroups: [1 component](https://oxbowui.com/playground/application/radiogroups)
-- select: [1 component](https://oxbowui.com/playground/application/select)
-- sign-in: [1 component](https://oxbowui.com/playground/application/sign-in)
-- sign-up: [1 component](https://oxbowui.com/playground/application/sign-up)
-- tables: [1 component](https://oxbowui.com/playground/application/tables)
-- tabs: [1 component](https://oxbowui.com/playground/application/tabs)
-- textarea: [1 component](https://oxbowui.com/playground/application/textarea)
-- toggles: [1 component](https://oxbowui.com/playground/application/toggles)
-- typography: [1 component](https://oxbowui.com/playground/application/typography)
-- category-previews: [1 component](https://oxbowui.com/playground/ecommerce/category-previews)
-- product-details: [1 component](https://oxbowui.com/playground/ecommerce/product-details)
-- product-lists: [1 component](https://oxbowui.com/playground/ecommerce/product-lists)
-- receipts: [1 component](https://oxbowui.com/playground/emails/receipts)
-- bento-grids: [1 component](https://oxbowui.com/playground/marketing/bento-grids)
-- blog-content: [1 component](https://oxbowui.com/playground/marketing/blog-content)
-- blog-entries: [1 component](https://oxbowui.com/playground/marketing/blog-entries)
-- contact: [1 component](https://oxbowui.com/playground/marketing/contact)
-- creative-heros: [1 component](https://oxbowui.com/playground/marketing/creative-heros)
-- cta: [1 component](https://oxbowui.com/playground/marketing/cta)
-- cta-newsletter: [1 component](https://oxbowui.com/playground/marketing/cta-newsletter)
-- faq: [1 component](https://oxbowui.com/playground/marketing/faq)
-- features: [1 component](https://oxbowui.com/playground/marketing/features)
-- footers: [1 component](https://oxbowui.com/playground/marketing/footers)
-- gallery: [1 component](https://oxbowui.com/playground/marketing/gallery)
-- landing-pages: [1 component](https://oxbowui.com/playground/marketing/landing-pages)
-- logo-clouds: [1 component](https://oxbowui.com/playground/marketing/logo-clouds)
-- pricing: [1 component](https://oxbowui.com/playground/marketing/pricing)
-- pricing-pages: [1 component](https://oxbowui.com/playground/marketing/pricing-pages)
-- stats: [1 component](https://oxbowui.com/playground/marketing/stats)
-- steps: [1 component](https://oxbowui.com/playground/marketing/steps)
-- team: [1 component](https://oxbowui.com/playground/marketing/team)
-- testimonials: [1 component](https://oxbowui.com/playground/marketing/testimonials)
-- timeline: [1 component](https://oxbowui.com/playground/marketing/timeline)

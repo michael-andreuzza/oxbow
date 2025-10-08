@@ -43,7 +43,7 @@ export default defineConfig({
     react(),
   ],
   adapter: localhost ? node({ mode: "standalone" }) : netlify(),
-  output: "server",
+  output: "static",
   vite: {
     plugins: [tailwindcss()],
     ssr: {

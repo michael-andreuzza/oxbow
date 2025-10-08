@@ -15,6 +15,39 @@ type PlaygroundComponentModule = ComponentInstance & {
   freeComponent?: boolean;
 };
 
+export async function getStaticPaths() {
+  // Get all oxbow components
+  const modules = import.meta.glob("@/components/oxbow/**/*.astro");
+  const keys = Object.keys(modules);
+  
+  // Build paths for all components
+  const paths = [];
+  
+  for (const key of keys) {
+    // Extract section, subsection, and index from the path
+    const pathParts = key
+      .replace(/^.*?\/src\/components\/oxbow\//, "")
+      .replace(/\.astro$/, "")
+      .split("/");
+    
+    if (pathParts.length >= 3) {
+      const section = pathParts[0];
+      const subsection = pathParts[1];
+      const fileName = pathParts[2];
+      
+      // Extract index from filename (e.g., "01" from "01.astro")
+      const indexMatch = fileName.match(/^(\d+)/);
+      const index = indexMatch ? indexMatch[1] : "1";
+      
+      paths.push({
+        params: { section, subsection, index },
+      });
+    }
+  }
+  
+  return paths;
+}
+
 // Parameters
 const { section, subsection, index } = Astro.params;
 const modules = import.meta.glob("@/components/oxbow/**/*.astro") as Record<
@@ -27,22 +60,15 @@ const sectionKeys = keys.filter((k) => k.match(sectionRegex));
 sectionKeys.sort();
 const currentKey = sectionKeys[parseInt(index) - 1];
 const componentModule = currentKey ? await modules[currentKey]() : undefined;
+const componentPath = `${section}/${subsection}/${index}`;
 
 // Metadata from module exports
 const componentDescription = componentModule?.description || "";
 const freeComponent = componentModule?.freeComponent ?? true;
 
+const leftPadZero = (numString: number) => numString.toString().padStart(2, "0");
+
 const sectionLength = sectionKeys.length;
-const PreviewElement = parseInt(index) === 1 ? "div" : "a";
-const PreviewElementProps =
-  parseInt(index) === 1
-    ? {}
-    : { href: `/playground/${section}/${subsection}/${parseInt(index) - 1}` };
-const NextElement = parseInt(index) === sectionLength ? "div" : "a";
-const NextElementProps =
-  parseInt(index) === sectionLength
-    ? {}
-    : { href: `/playground/${section}/${subsection}/${parseInt(index) + 1}` };
 
 // Build category → blocks map and counts for detail navigation
 const triples = keys.map((k) => k.split("/").slice(-3)); // [section, subsection, file]
@@ -123,7 +149,7 @@ const countsByCatSub = triples.reduce(
     >
       <Playground
         componentIndex={parseInt(index)}
-        componentPath={currentKey ? currentKey.replace(/^\//, "") : ""}
+        componentPath={componentPath}
         playgroundRef={`${section}-${subsection}-${index}`}
         initialTabIsCode={Astro.url.searchParams.get("tab") === "code"}
         navCat={section}
@@ -133,10 +159,10 @@ const countsByCatSub = triples.reduce(
         counts={countsByCatSub}
         prevHref={parseInt(index) === 1
           ? undefined
-          : `/playground/${section}/${subsection}/${parseInt(index) - 1}`}
+          : `/playground/${section}/${subsection}/${leftPadZero(parseInt(index) - 1)}`}
         nextHref={parseInt(index) === sectionLength
           ? undefined
-          : `/playground/${section}/${subsection}/${parseInt(index) + 1}`}
+          : `/playground/${section}/${subsection}/${leftPadZero(parseInt(index) + 1)}`}
         sectionLength={sectionLength}
       >
         <componentModule.default />

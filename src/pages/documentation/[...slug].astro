@@ -1,6 +1,6 @@
 ---
 import DocumentationLayout from "@/layouts/DocsLayout.astro";
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import {
   pageSections,
   pageExamples,
@@ -11,20 +11,16 @@ import {
   storeSections,
 } from "@/data/entries.json";
 
-const slugParam = Astro.params.slug;
-const slug = Array.isArray(slugParam)
-  ? slugParam.join("/")
-  : slugParam || "";
-
-if (!slug) {
-  throw Astro.redirect("/documentation");
+export async function getStaticPaths() {
+  const docs = await getCollection("documentation");
+  return docs.map((doc) => ({
+    params: { slug: doc.slug },
+    props: { doc },
+  }));
 }
 
-const entry = await getEntry("documentation", slug);
-
-if (!entry) {
-  throw Astro.redirect("/documentation");
-}
+const { doc } = Astro.props;
+const entry = doc;
 
 const { Content, headings } = await entry.render();
 const siblings = (await getCollection("documentation")).sort((a, b) => {

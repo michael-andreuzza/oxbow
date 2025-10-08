@@ -1,6 +1,26 @@
 ---
 import IframeHead from "@/components/IframeHead.astro";
 
+export async function getStaticPaths() {
+  // Get all oxbow components
+  const modules = import.meta.glob("@/components/oxbow/**/*.astro");
+  const keys = Object.keys(modules);
+  
+  // Generate paths for all components
+  const paths = keys.map((key) => {
+    // Remove the src/components/ prefix and .astro extension
+    const componentPath = key
+      .replace(/^.*?\/src\/components\/oxbow\//, "")
+      .replace(/\.astro$/, "");
+    
+    return {
+      params: { componentPath: componentPath },
+    };
+  });
+  
+  return paths;
+}
+
 const { componentPath } = Astro.params;
 const params = Astro.url.searchParams;
 const context = params.get("context");

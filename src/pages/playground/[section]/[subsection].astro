@@ -7,6 +7,40 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 import SubsectionToolbarIsland from "@/components/playground/SubsectionToolbarIsland";
 import { formatDistanceToNowStrict } from "date-fns";
 import updates from "@/data/updates.json";
+
+export async function getStaticPaths() {
+  // Get all oxbow components
+  const modules = import.meta.glob("@/components/oxbow/**/*.astro");
+  const keys = Object.keys(modules);
+  
+  // Build paths for all section/subsection combinations
+  const paths = [];
+  const seen = new Set();
+  
+  for (const key of keys) {
+    // Extract section and subsection from the path
+    const pathParts = key
+      .replace(/^.*?\/src\/components\/oxbow\//, "")
+      .replace(/\.astro$/, "")
+      .split("/");
+    
+    if (pathParts.length >= 2) {
+      const section = pathParts[0];
+      const subsection = pathParts[1];
+      const pathKey = `${section}/${subsection}`;
+      
+      if (!seen.has(pathKey)) {
+        seen.add(pathKey);
+        paths.push({
+          params: { section, subsection },
+        });
+      }
+    }
+  }
+  
+  return paths;
+}
+
 const { section, subsection } = Astro.params;
 const modules = import.meta.glob("@/components/oxbow/**/*.astro", {
   eager: true,
