@@ -171,6 +171,13 @@ const jsonLdCombined = Array.isArray(additionalStructured)
 />
 
 <ToggleLocalStorage />
+{import.meta.env.PROD && (
+  <script
+    defer
+    src="https://cloud.umami.is/script.js"
+    data-website-id="20c43c05-4f38-4afb-b41b-83dcbb92106d"
+  />
+)}
 <!-- Inter Font: https://rsms.me/inter/ -->
 <link rel="preconnect" href="https://rsms.me/" />
 <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />

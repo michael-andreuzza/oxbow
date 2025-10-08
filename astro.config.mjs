@@ -1,17 +1,11 @@
 import mdx from "@astrojs/mdx";
 import netlify from "@astrojs/netlify";
-import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
 import alpinejs from "@astrojs/alpinejs";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
 import react from "@astrojs/react";
-
-// Use node adapter for development, netlify for production
-const localhost = process.env.NODE_ENV === "development";
-
-console.log("Loading app with NODE_ENV: ", process.env.NODE_ENV);
 
 // https://astro.build/config
 export default defineConfig({
@@ -42,8 +36,8 @@ export default defineConfig({
     alpinejs({ entrypoint: "src/alpine" }),
     react(),
   ],
-  adapter: localhost ? node({ mode: "standalone" }) : netlify(),
-  output: "server",
+  adapter: netlify(),
+  output: "static",
   vite: {
     plugins: [tailwindcss()],
     ssr: {
