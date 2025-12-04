@@ -62,7 +62,7 @@ const SEVEN_DAYS_AGO = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
       const updatedAt = new Date(updated * 1000);
       const isUpdatedLastWeek = updatedAt > SEVEN_DAYS_AGO;
       return (
-        <li class="relative py-2  group-hover:opacity-30 hover:opacity-100 peer hover:peer-hover:opacity-30 duration-300">
+        <li class="relative py-2  group">
           <a
             title={template.name}
             href={template.link}
