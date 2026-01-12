@@ -4,6 +4,9 @@
   "description": "Oxbow UI – open-source building blocks for modern product sites",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/UnwrappedDesign/oxbow.git"
