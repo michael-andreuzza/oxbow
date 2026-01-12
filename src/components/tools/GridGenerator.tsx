@@ -26,7 +26,7 @@ export default function GridGenerator() {
     highlighter: Highlighter | null;
     themeName: string;
     loading: Promise<void> | null;
-  }>({ highlighter: null, themeName: "css-variables", loading: null });
+  }>({ highlighter: null, themeName: "github-light", loading: null });
   const gapSize = gap * 2; // Convert gap to pixels
   const getCellHeight = useCallback(
     () => cellSize.height || 96,
@@ -224,11 +224,10 @@ export default function GridGenerator() {
         if (!highlighterCache.current.highlighter) {
           if (!highlighterCache.current.loading) {
             highlighterCache.current.loading = (async () => {
-              const { createHighlighter, createCssVariablesTheme } = await import("shiki");
-              const theme = createCssVariablesTheme({ name: "css-variables" });
-              highlighterCache.current.themeName = theme.name;
+              const { createHighlighter } = await import("shiki");
+              highlighterCache.current.themeName = "github-light";
               highlighterCache.current.highlighter = await createHighlighter({
-                themes: [theme],
+                themes: ["github-light", "github-dark"],
                 langs: ["html", "jsx", "tsx"],
               });
             })();
@@ -328,7 +327,7 @@ export default function GridGenerator() {
               <div
                 key={index}
                 data-grid-cell
-                className="relative flex items-center justify-center p-8 text-2xl bg-base-50 dark:bg-base-900 cursor-pointer rounded-lg shadow-oxbow border border-base-200 dark:border-base-700"
+                className="relative flex items-center justify-center p-8 text-2xl bg-base-50 dark:bg-base-900 cursor-pointer rounded-lg   border border-base-200 dark:border-base-700"
                 onClick={() => handleAddItem(x, y)}
               >
                 <span className="text-base-400 dark:text-base-500">+</span>
@@ -421,7 +420,7 @@ export default function GridGenerator() {
         </div>
       </div>
       <div className="mt-2">
-        <div className="shadow-oxbow border border-base-200 dark:border-base-800 overflow-hidden scrollbar-hide text-xs bg-white">
+        <div className="  border border-base-200 dark:border-base-800 overflow-hidden scrollbar-hide text-xs bg-white">
           {highlightedCode ? (
             <div dangerouslySetInnerHTML={{ __html: highlightedCode }} />
           ) : (

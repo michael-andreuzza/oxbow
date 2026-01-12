@@ -52,7 +52,7 @@ export default function PlaygroundShortcutsButton() {
              
               <div
                 aria-hidden="true"
-                className="pointer-events-none bg-secondary-vertical-stripes dark:bg-secondary-vertical-stripes-dark absolute inset-0 h-full w-[22%] ml-auto"
+                className="pointer-events-none bg-blue-vertical-stripes dark:bg-blue-vertical-stripes-dark absolute inset-0 h-full w-[22%] ml-auto"
               ></div>
              
               <div className="relative">

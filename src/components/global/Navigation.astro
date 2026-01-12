@@ -1,6 +1,4 @@
 ---
-import Command from "@/components/fundations/icons/Command.astro";
-import Search from "@/components/fundations/icons/Search.astro";
 import ThemeToggle from "@/components/assets/ThemeToggle.astro";
 // Assets
 import Logo from "@/components/assets/Logo.astro";
@@ -11,7 +9,7 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 ---
 
 <div
-  class="fixed top-0 left-0 right-0 z-50 items-center w-full mx-auto duration-300 bg-beige dark:bg-base-950"
+  class="fixed top-0 left-0 right-0 z-50 items-center w-full mx-auto duration-300 bg-white dark:bg-base-950"
   x-data="navigation()"
 >
   <Wrapper variant="nav" class="w-full">
@@ -22,19 +20,13 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
       <div class="flex flex-row items-center justify-between lg:justify-start">
         <a
           href="/"
-          class="flex items-center w-full gap-2 sm:w-auto text-base-900 dark:text-beige"
+          class="flex items-center w-full gap-2 sm:w-auto text-base-900 dark:text-white"
           ><Logo class="h-7 dark:invert" /> <p class="-mt-1">oxbow ui</p></a
         >
         <button
-          class="flex items-center text-base-900 dark:text-beige cursor-pointer sm:hidden"
-          onclick="document.querySelector('ninja-keys').open()"
-        >
-          <Search class="size-4" />
-        </button>
-        <button
           aria-label="open"
           @click="open = !open"
-          class="inline-flex items-center justify-center p-2 text-base-900 dark:text-beige focus:outline-none focus:text-base-400 md:hidden"
+          class="inline-flex items-center justify-center p-2 text-base-900 dark:text-white focus:outline-none focus:text-base-400 md:hidden"
           ><svg
             viewBox="0 0 24 24"
             class="size-6"
@@ -60,47 +52,24 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
       </div>
       <nav
         :class="{'flex': open, 'hidden': !open}"
-        class="flex-col items-center justify-end flex-grow hidden text-sm text-base-500 dark:text-base-400 md:flex md:flex-row md:pb-0 gap-x-4 gap-y-4"
+        class="flex-col items-center justify-end flex-grow hidden font-semibold text-base-600 dark:text-base-400 md:flex md:flex-row md:pb-0 gap-x-4 gap-y-4"
       >
-        <button
-          class="items-center hidden cursor-pointer lg:flex"
-          onclick="document.querySelector('ninja-keys').open()"
-        >
-          <Command class="size-4" />
-          K
-        </button>
-
-        <div class="flex flex-col items-center gap-3 md:flex-row">
+        <div class="flex flex-col items-center gap-4 md:flex-row">
           <Text
             tag="a"
-            variant="textXS"
+            variant="textBase"
             href="https://lexingtonthemes.com"
-            class="hover:text-base-600 dark:hover:text-beige font-medium"
-            >Astro Templates</Text
+            class="hover:text-base-600 dark:hover:text-white"
+            >Astro &amp; Tailwind CSS Templates</Text
           >
+
           <Text
             tag="a"
-            variant="textXS"
+            variant="textBase"
             href="https://github.com/UnwrappedDesign/oxbow"
-            class="hover:text-base-600 dark:hover:text-beige font-medium"
-            >GitHub</Text
+            class="hover:text-base-600 dark:hover:text-white">GitHub</Text
           >
-          <Text
-            x-cloak
-            tag="a"
-            variant="textXS"
-            href="/documentation/getting-started"
-            class="hover:text-base-600 dark:hover:text-beige font-medium"
-            >Documentation</Text
-          >
-          <Text
-            x-cloak
-            tag="a"
-            variant="textXS"
-            href="/changelog"
-            class="hover:text-base-600 dark:hover:text-beige font-medium"
-            >Changelog</Text
-          >
+
           <ThemeToggle />
         </div>
       </nav>

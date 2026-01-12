@@ -472,7 +472,7 @@ export default function PlaygroundIsland({
               <div className="relative">
                 <button
                   onClick={(e) => openNavMenu("idx", e)}
-                  className="hidden md:flex items-center gap-2  text-xs transition-colors text-base-900 hover:text-accent-600 dark:text-beige dark:hover:text-accent-400"
+                  className="hidden md:flex items-center gap-2  text-xs transition-colors text-base-900 hover:text-accent-600 dark:text-white dark:hover:text-accent-400"
                 >
                  <div>
                     <span>#</span>
@@ -606,7 +606,7 @@ export default function PlaygroundIsland({
           )}
         </div>
       </div>
-      <div className="relative flex w-full min-h-0 overflow-hidden outline outline-base-200 dark:outline-base-800  shadow-oxbow dark:shadow-base-900/50 z-1 isolate scrollbar-hide bg-beige dark:bg-base-950/60 mt-4 scrollbar-hide">
+      <div className="relative flex w-full min-h-0 overflow-hidden outline outline-base-200 shadow rounded-lg dark:outline-base-800    dark:shadow-base-900/50 z-1 isolate scrollbar-hide bg-beige dark:bg-base-950/60 mt-4 scrollbar-hide">
         <PlaygroundShortcutsButton />
         {tab === "preview" && (
           <div className="flex flex-col items-center w-full bg-beige scrollbar-hide dark:bg-base-950/60">

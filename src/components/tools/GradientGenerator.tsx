@@ -230,7 +230,7 @@ export default function GradientGenerator() {
         </div>
         <div className="lg:col-span-2">
           <div
-            className={`flex items-center justify-center relative h-full w-full p-12 md:p-20 rounded-lg overflow-hidden border border-base-100 dark:border-white/10 shadow-oxbow ${
+            className={`flex items-center justify-center relative h-full w-full p-12 md:p-20 rounded-lg overflow-hidden border border-base-100 dark:border-white/10   ${
               mode === "background" ? "" : "bg-white dark:bg-base-800"
             }`}
             style={mode === "background" ? gradientStyle : undefined}
@@ -269,7 +269,7 @@ export default function GradientGenerator() {
           </button>
         </div>
 
-      <div className="p-6 mt-4 bg-white dark:bg-base-800 rounded-lg flex flex-col gap-8 outline shadow-oxbow outline-base-100 dark:outline-white/10">
+      <div className="p-6 mt-4 bg-white dark:bg-base-800 rounded-lg flex flex-col gap-8 outline   outline-base-100 dark:outline-white/10">
         {colorFamilies.map((family) => (
           <div key={family}>
             <p className=" text-xs uppercase text-base-500 dark:text-base-400">

@@ -1,13 +1,27 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import colors from 'tailwindcss/colors';
 
+// Tailwind default palette families we want to expose
 const families = [
-  'charcoal','metal','haiti','purple','blueBerry','blue','sky','turquoise',
-  'persianGreen','pastelGreen','grass','carrot','orange','red','raspberry','fuchsia',
+  'slate','gray','zinc','neutral','stone','red','orange','amber','yellow',
+  'lime','green','emerald','teal','cyan','sky','blue','indigo','violet',
+  'purple','fuchsia','pink','rose',
 ];
-const shades = [50,100,200,300,400,500,600,700,800,900] as const;
+const shades = [50,100,200,300,400,500,600,700,800,900,950] as const;
+const palette = colors as Record<string, Record<string, string>>;
 
-function cssVariableName(family: string, shade: number) {
-  return `--color-${family}-${shade}`;
+function hexToRgb(hex: string): [number, number, number] | null {
+  const h = hex.replace('#', '').trim();
+  const normalized = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+  if (normalized.length !== 6) return null;
+  const int = parseInt(normalized, 16);
+  return [(int >> 16) & 255, (int >> 8) & 255, int & 255];
+}
+
+function getColor(family: string, shade: number): string | null {
+  const col = palette[family];
+  const value = col ? col[shade as unknown as keyof typeof col] : undefined;
+  return typeof value === 'string' ? value : null;
 }
 
 type Format = 'var' | 'hex' | 'rgb' | 'hsl' | 'oklch';
@@ -34,26 +48,6 @@ export default function ColorPalette() {
       if (key) setCopiedKey(key);
       setTimeout(() => setCopied(''), 1200);
     } catch {}
-  }
-
-  function getComputedBg(variable: string): string | null {
-    if (cacheRef.current[variable]) return cacheRef.current[variable];
-    try {
-      const el = document.createElement('div');
-      el.style.position = 'absolute';
-      el.style.left = '-9999px';
-      el.style.top = '-9999px';
-      el.style.width = '1px';
-      el.style.height = '1px';
-      el.style.backgroundColor = `var(${variable})`;
-      document.body.appendChild(el);
-      const color = getComputedStyle(el).backgroundColor || '';
-      document.body.removeChild(el);
-      cacheRef.current[variable] = color;
-      return color;
-    } catch {
-      return null;
-    }
   }
 
   function rgbFromCss(color: string): [number, number, number] | null {
@@ -154,12 +148,15 @@ export default function ColorPalette() {
     return [+(L).toFixed(2), +C.toFixed(2), +H.toFixed(0)];
   }
 
-  function formatValueFromEl(el: HTMLElement, family: string, shade: number): string {
-    const variable = cssVariableName(family, shade);
-    if (format === 'var') return variable;
-    const bg = getComputedStyle(el).backgroundColor || getComputedBg(variable);
-    const rgb = bg ? rgbFromCss(bg) : null;
-    if (!rgb) return variable;
+  function formatValue(color: string): string {
+    if (format === 'var') return color;
+    const cached = cacheRef.current[color];
+    let rgb = cached ? rgbFromCss(cached) : null;
+    if (!rgb) {
+      rgb = rgbFromCss(color) || hexToRgb(color);
+      if (rgb) cacheRef.current[color] = color;
+    }
+    if (!rgb) return color;
     if (format === 'hex') return toHex(rgb).toLowerCase();
     if (format === 'rgb') return `${rgb[0]} ${rgb[1]} ${rgb[2]}`;
     if (format === 'hsl') {
@@ -253,21 +250,22 @@ export default function ColorPalette() {
         {list.map((family) => (
           <section key={family}>
             <div className="mb-2 text-sm font-medium capitalize text-zinc-700 dark:text-zinc-200">{family}</div>
-            <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10">
+            <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-11">
               {shades.map((shade) => {
-                const variable = cssVariableName(family, shade);
+                const color = getColor(family, shade);
+                if (!color) return null;
                 const label = `${family}-${shade}`;
                 const key = label;
                 return (
                   <div key={label} className="flex flex-col items-stretch">
                     <button
                       onClick={(e) => {
-                        const value = formatValueFromEl(e.currentTarget as HTMLElement, family, shade);
+                        const value = formatValue(color);
                         copy(value, key);
                       }}
-                      title={`Click to copy ${variable}`}
+                      title={`Click to copy ${color}`}
                       className="relative h-14 rounded-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 dark:focus-visible:ring-offset-zinc-900"
-                      style={{ backgroundColor: `var(${variable})` }}
+                      style={{ backgroundColor: color }}
                     >
                       {copiedKey === key && (
                         <span className="absolute inset-0 grid text-[0.70rem] font-mono place-items-center rounded-md bg-black/40 text-white">Copied</span>
