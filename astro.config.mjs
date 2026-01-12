@@ -1,4 +1,3 @@
-import netlify from "@astrojs/netlify";
 import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
 import alpinejs from "@astrojs/alpinejs";
@@ -32,7 +31,7 @@ export default defineConfig({
     alpinejs({ entrypoint: "src/alpine" }),
     react(),
   ],
-  adapter: localhost ? node({ mode: "standalone" }) : netlify(),
+  adapter: node({ mode: "standalone" }),
   output: "static",
   vite: {
     plugins: [tailwindcss()],
