@@ -3,9 +3,6 @@ import BaseHead from "@/components/BaseHead.astro";
 import Navigation from "@/components/global/Navigation.astro";
 import Footer from "@/components/global/Footer.astro";
 
-import CommandBar from "../components/CommandBar";
-import CopyButton from "@/components/documentation/CopyButton.astro";
-
 const siteUrl = (Astro.site && Astro.site.toString()) || "https://oxbowui.com";
 const canonicalUrl = new URL(
   Astro.url.pathname,
@@ -16,7 +13,6 @@ const privatePaths = [
   /^\/login(\b|\/)/,
   /^\/login-password(\b|\/)/,
   /^\/email-signin(\b|\/)/,
-  /^\/thankyou(\b|\/)/,
   /^\/webhooks\//,
   /^\/api\//,
   /^\/iframe\//,
@@ -41,8 +37,6 @@ const {
 }: HeadOverrides & { hideNav?: boolean; hideFooter?: boolean } = (Astro.props ??
   {}) as any;
 
-// Check if we're on a documentation page
-const isDocsPage = Astro.url.pathname.startsWith("/documentation");
 ---
 
 <html lang="en" class="scroll-smooth">
@@ -58,15 +52,11 @@ const isDocsPage = Astro.url.pathname.startsWith("/documentation");
       structuredData={structuredData}
     />
   </head>
-  <body class="bg-beige dark:bg-base-950 min-h-screen flex flex-col">
+  <body class="bg-white dark:bg-base-950 min-h-screen flex flex-col">
     {!hideNav && <Navigation />}
-    <main
-      class:list={["grow w-full mx-auto", { "py-26 lg:py-23": !isDocsPage }]}
-    >
+    <main class="grow w-full mx-auto py-26 lg:py-23">
       <slot />
     </main>
     {!hideFooter && <Footer />}
-    <CommandBar client:only="react" />
-    <CopyButton targetSelector="pre" />
   </body>
 </html>

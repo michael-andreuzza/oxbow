@@ -5,30 +5,28 @@ import Text from "@/components/fundations/typography/Text.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 
 import SubsectionToolbarIsland from "@/components/playground/SubsectionToolbarIsland";
-import { formatDistanceToNowStrict } from "date-fns";
-import updates from "@/data/updates.json";
 
 export async function getStaticPaths() {
   // Get all oxbow components
   const modules = import.meta.glob("@/components/oxbow/**/*.astro");
   const keys = Object.keys(modules);
-  
+
   // Build paths for all section/subsection combinations
   const paths = [];
   const seen = new Set();
-  
+
   for (const key of keys) {
     // Extract section and subsection from the path
     const pathParts = key
       .replace(/^.*?\/src\/components\/oxbow\//, "")
       .replace(/\.astro$/, "")
       .split("/");
-    
+
     if (pathParts.length >= 2) {
       const section = pathParts[0];
       const subsection = pathParts[1];
       const pathKey = `${section}/${subsection}`;
-      
+
       if (!seen.has(pathKey)) {
         seen.add(pathKey);
         paths.push({
@@ -37,7 +35,7 @@ export async function getStaticPaths() {
       }
     }
   }
-  
+
   return paths;
 }
 
@@ -88,10 +86,6 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true }
 );
 const formattedSubsection = subsection.replace("-", " ");
-
-const SEVEN_DAYS_AGO = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-// Normalize subsection for lookup (keeps things case/char safe)
-const subsectionKey = (subsection || "").toLowerCase();
 ---
 
 <style>
@@ -175,7 +169,7 @@ const subsectionKey = (subsection || "").toLowerCase();
         </div>
       </div>
     </Wrapper>
-    <Wrapper variant="standard" class="border-y py-8">
+    <Wrapper variant="standard" class="py-8">
       <div class="masonry-grid">
         {
           sectionComponents.map(
@@ -186,37 +180,19 @@ const subsectionKey = (subsection || "").toLowerCase();
               const pathNoAstro = filePath.replace(".astro", "");
               const screenshot = images[imagePath]?.default;
               if (!screenshot) return null;
-              const updatedAt = new Date(updates[filePath] * 1000);
-              const isUpdatedLastWeek = updatedAt > SEVEN_DAYS_AGO;
               return (
                 <a
                   href={`/playground/${pathNoAstro}`}
                   class="relative flex flex-col group masonry-item"
                   style="display: block;"
                 >
-                  <div class="flex flex-col sr-only gap-1">
-                    {isUpdatedLastWeek && (
-                      <Text
-                        tag="p"
-                        variant="textXS"
-                        class="relative flex items-center gap-1 text-base-400 dark:text-base-500"
-                      >
-                        Updated{" "}
-                        {formatDistanceToNowStrict(updatedAt, {
-                          unit: "day",
-                          roundingMethod: "ceil",
-                        })}{" "}
-                        ago
-                      </Text>
-                    )}
-                  </div>
-                  <div class="overflow-hidden bg-white outline outline-base-200 dark:outline-base-800 ">
+                  <div class="overflow-hidden bg-white outline outline-base-200 rounded-lg  dark:outline-base-800 ">
                     <img
                       width={screenshot.width ?? 1000}
                       height={screenshot.height ?? 1000}
                       src={screenshot.src}
                       alt={`${subsection} preview ${index + 1}`}
-                      class="object-cover object-top"
+                      class="object-cover object-top rounded-lg"
                       loading="lazy"
                     />
                   </div>

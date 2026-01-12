@@ -4,9 +4,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/typography/Text.astro";
 import Playground from "@/components/playground/Playground.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
-import IconButton from "@/components/fundations/buttons/IconButton.astro";
-import ChevronLeft from "@/components/fundations/icons/ChevronLeft.astro";
-import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
+
 // import DetailToolbarIsland from "@/components/playground/DetailToolbarIsland";
 import type { ComponentInstance } from "astro";
 
@@ -19,32 +17,32 @@ export async function getStaticPaths() {
   // Get all oxbow components
   const modules = import.meta.glob("@/components/oxbow/**/*.astro");
   const keys = Object.keys(modules);
-  
+
   // Build paths for all components
   const paths = [];
-  
+
   for (const key of keys) {
     // Extract section, subsection, and index from the path
     const pathParts = key
       .replace(/^.*?\/src\/components\/oxbow\//, "")
       .replace(/\.astro$/, "")
       .split("/");
-    
+
     if (pathParts.length >= 3) {
       const section = pathParts[0];
       const subsection = pathParts[1];
       const fileName = pathParts[2];
-      
+
       // Extract index from filename (e.g., "01" from "01.astro")
       const indexMatch = fileName.match(/^(\d+)/);
       const index = indexMatch ? indexMatch[1] : "1";
-      
+
       paths.push({
         params: { section, subsection, index },
       });
     }
   }
-  
+
   return paths;
 }
 
@@ -66,7 +64,8 @@ const componentPath = `${section}/${subsection}/${index}`;
 const componentDescription = componentModule?.description || "";
 const freeComponent = componentModule?.freeComponent ?? true;
 
-const leftPadZero = (numString: number) => numString.toString().padStart(2, "0");
+const leftPadZero = (numString: number) =>
+  numString.toString().padStart(2, "0");
 
 const sectionLength = sectionKeys.length;
 
@@ -143,10 +142,7 @@ const countsByCatSub = triples.reduce(
     </Wrapper>
   </section>
   <section>
-    <Wrapper
-      variant="wide"
-      class="relative py-8 border-y border-base-200 dark:border-base-800 2xl:border-x"
-    >
+    <Wrapper variant="wide" class="relative py-8">
       <Playground
         componentIndex={parseInt(index)}
         componentPath={componentPath}

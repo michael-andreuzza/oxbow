@@ -5,7 +5,7 @@ import PlaygroundIsland from "./PlaygroundIsland";
 // Components
 
 import * as prettier from "prettier";
-import { createHighlighter, createCssVariablesTheme } from "shiki";
+import { createHighlighter } from "shiki";
 
 interface Props {
   componentIndex: number;
@@ -129,28 +129,27 @@ const iframeSrc = `/iframe/${componentPath}?iframeId=${iframeId}`;
 const theme = ``;
 const hostId = `playground-host-${componentIndex}`;
 
-// Pre-render highlighted code for the island (Shiki css-variables)
+// Pre-render highlighted code for the island (Shiki GitHub themes)
 let highlightedSystem = "",
   highlightedLight = "",
   highlightedDark = "";
 
 try {
-  const shikiTheme = createCssVariablesTheme({ name: "css-variables" });
   const highlighter = await createHighlighter({
     langs: ["html"],
-    themes: [shikiTheme],
+    themes: ["vesper"],
   });
   highlightedSystem = await highlighter.codeToHtml(ppcode, {
     lang: "html",
-    theme: "css-variables",
+    theme: "vesper",
   });
   highlightedLight = await highlighter.codeToHtml(ppcodeLight || ppcode, {
     lang: "html",
-    theme: "css-variables",
+    theme: "vesper",
   });
   highlightedDark = await highlighter.codeToHtml(ppcodeDarkOnly || ppcode, {
     lang: "html",
-    theme: "css-variables",
+    theme: "github-dark",
   });
 } catch {}
 ---

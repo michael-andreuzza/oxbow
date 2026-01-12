@@ -8,7 +8,6 @@ Disallow: /webhooks/
 Disallow: /login
 Disallow: /login-password
 Disallow: /email-signin
-Disallow: /thankyou
 
 # Sitemaps
 Sitemap: https://oxbowui.com/sitemap-index.xml
