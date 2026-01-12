@@ -31,7 +31,6 @@
     "@alpinejs/intersect": "^3.15.3",
     "@alpinejs/ui": "^3.15.3",
     "@astrojs/alpinejs": "^0.4.9",
-    "@astrojs/node": "^9.5.1",
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.6.1",
     "@astrojs/ts-plugin": "^1.10.6",
