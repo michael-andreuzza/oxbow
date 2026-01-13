@@ -24,11 +24,7 @@ export default defineConfig({
     inlineStylesheets: "always",
   },
   site: "https://oxbowui.com",
-  integrations: [
-    sitemap(),
-    alpinejs({ entrypoint: "src/alpine" }),
-    react(),
-  ],
+  integrations: [sitemap(), alpinejs({ entrypoint: "src/alpine" }), react()],
   output: "static",
   vite: {
     plugins: [tailwindcss()],
